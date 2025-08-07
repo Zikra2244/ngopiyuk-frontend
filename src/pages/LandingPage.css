@@ -1,0 +1,52 @@
+/* frontend/src/pages/LandingPage.css */
+.landing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1511920183353-3c9c9b062e74?q=80&w=1887&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.landing-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+.landing-content p {
+  font-size: 1.25rem;
+  margin-bottom: 40px;
+}
+
+.landing-buttons .btn {
+  padding: 15px 30px;
+  margin: 0 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #1877f2;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #166fe5;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-secondary:hover {
+  background-color: white;
+  color: #333;
+}
