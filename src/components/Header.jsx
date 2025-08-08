@@ -1,52 +1,66 @@
-// frontend/src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import './Header.css'; // Kita akan buat file CSS ini
+import styles from './Header.module.css';
 
 const Header = () => {
-  const [user, setUser] = useState(null);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedUser = jwtDecode(token);
-      setUser(decodedUser);
-    }
-  }, []);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                const decodedUser = jwtDecode(token);
+                setUser(decodedUser);
+            } catch (error) {
+                console.error("Invalid token:", error);
+                localStorage.removeItem('token');
+            }
+        }
+    }, []);
 
-  const handleLogout = () => {
-    // Hapus token dari localStorage
-    localStorage.removeItem('token');
-    // Arahkan kembali ke landing page
-    navigate('/');
-  };
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setUser(null);
+        setDropdownVisible(false);
+        navigate('/'); // <-- PERUBAHAN DI SINI
+    };
 
-  if (!user) {
-    return null; // Jangan tampilkan header jika user belum teridentifikasi
-  }
+    return (
+        <header className={styles.mainHeader}>
+            <div className={styles.logo}>
+                <Link to="/"> 
+                    <i className={`fas fa-mug-hot ${styles.logoIcon}`}></i> 
+                    NgopiYuk!
+                </Link>
+            </div>
+            <nav className={styles.mainNav}>
+                {user ? (
+                    // TAMPILAN JIKA SUDAH LOGIN
+                    <div className={styles.userMenu} onClick={() => setDropdownVisible(!dropdownVisible)}>
+                        <div className={styles.profileInitial}>{user.email.charAt(0).toUpperCase()}</div>
+                        <span>{user.email}</span>
+                        <i className={`fas fa-chevron-down ${styles.arrowDown} ${dropdownVisible ? styles.arrowUp : ''}`}></i>
 
-  return (
-    <header className="app-header">
-      <div className="header-logo">
-        NgopiYuk! ☕
-      </div>
-      <div className="header-profile" onClick={() => setDropdownVisible(!dropdownVisible)}>
-        <div className="profile-initial">{user.email.charAt(0).toUpperCase()}</div>
-        <span>{user.email}</span>
-        <i className="arrow-down"></i>
-
-        {dropdownVisible && (
-          <div className="dropdown-menu">
-            <a href="#profile">Lihat Profil</a>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-        )}
-      </div>
-    </header>
-  );
+                        {dropdownVisible && (
+                            <div className={styles.dropdownMenu}>
+                                <Link to="/profile">Lihat Profil</Link>
+                                <button onClick={handleLogout}>Logout</button>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    // TAMPILAN JIKA BELUM LOGIN
+                    <>
+                        <Link to="/login" className={`${styles.btn} ${styles.btnNavSecondary}`}>Login</Link>
+                        <Link to="/register" className={`${styles.btn} ${styles.btnNavPrimary}`}>Register</Link>
+                    </>
+                )}
+            </nav>
+        </header>
+    );
 };
 
 export default Header;

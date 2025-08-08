@@ -1,0 +1,126 @@
+/* --- HERO SECTION --- */
+.heroSection {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  text-align: left;
+  padding: 2.3rem 5%; 
+  position: relative;
+  overflow: hidden;
+  min-height: 70vh;
+}
+
+/* Lapisan di belakang untuk gambar dan efek blur */
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('../assets/hero-background.jpg');
+  background-size: cover;
+  background-position: center;
+  
+  filter: blur(2px);
+  z-index: -1; 
+  transform: scale(1.05); 
+}
+
+/* --- HERO CONTENT --- */
+.heroContent {
+  max-width: 600px; 
+  position: relative;
+  z-index: 2;
+}
+.heroContent h1, .heroContent p {
+  color: #FFF1E4; 
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+.heroContent h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+.heroContent p {
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 0 2.5rem;
+  line-height: 1.7;
+}
+
+/* --- TOMBOL HERO --- */
+.heroButtons {
+  display: flex;
+  gap: 1rem; 
+}
+.btnHero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.btnHero.primary {
+  background-color: var(--primary-color); 
+  color: var(--bg-light);           
+}
+.btnHero.primary:hover {
+  background-color: var(--primary-color-darker); 
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.btnHero.secondary {
+  background-color: transparent;
+  color: var(--bg-white);
+  border-color: var(--bg-white);
+}
+.btnHero.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+/* --- FEATURE & SHOWCASE SECTION --- */
+.featureSection, .showcaseSection {
+  padding: 4rem 5% 6rem;
+  background-color: var(--bg-white);
+  position: relative;
+}
+.sectionHeader { text-align: center; margin-bottom: 4rem; }
+.sectionHeader span { color: var(--primary-color); font-weight: 600; margin-bottom: 0.5rem; display: block; }
+.sectionHeader h2 { font-size: 2.5rem; font-weight: 700; color: var(--text-dark); }
+.featureCardsContainer {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem; max-width: 1100px; margin: 0 auto;
+}
+.featureCard {
+  background-color: var(--bg-white); border: 1px solid var(--border-light);
+  padding: 2.5rem 2rem; border-radius: 16px;
+  text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.featureCard:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+.cardIcon { font-size: 2.25rem; color: var(--primary-color); margin-bottom: 1.5rem; }
+.featureCard h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+.featureCard p { color: var(--text-gray); line-height: 1.6; font-size: 0.95rem; }
+
+/* --- APP SHOWCASE SECTION --- */
+.showcaseImageContainer {
+  max-width: 900px; margin: 0 auto;
+  border-radius: 16px; padding: 1rem;
+  background-color: var(--bg-white);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  border: 1px solid var(--border-light);
+}
+.showcaseImageContainer img {
+  width: 100%; display: block; border-radius: 8px;
+}

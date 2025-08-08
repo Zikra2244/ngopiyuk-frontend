@@ -1,126 +1,66 @@
-    import React, { useState, useEffect } from 'react';
-    import axios from 'axios';
-    import { jwtDecode } from 'jwt-decode';
-    import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-    import Header from '../components/Header'; // <-- TAMBAHKAN INI
-    import Footer from '../components/Footer'; // <-- TAMBAHKAN INI
-    import '../App.css';
-    import MapClickHandler from '../components/MapClickHandler';
-    import AddCafeModal from '../components/AddCafeModal';
+import React, { useState, useEffect } from 'react'; 
+import { Link } from 'react-router-dom';
+import styles from './LandingPage.module.css';
 
-    const HomePage = () => {
-    const [user, setUser] = useState(null);
-    const [cafes, setCafes] = useState([]);
-    const position = [-6.2088, 106.8456];
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
-    const [newCafeLocation, setNewCafeLocation] = useState(null);
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
+const LandingPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) setUser(jwtDecode(token));
-        axios.get('http://localhost:5000/api/cafes')
-        .then(response => setCafes(response.data))
-        .catch(error => console.error('Gagal mengambil data kafe!', error));
-    }, []);
-    
-
-    // Fungsi submit form (khusus admin)
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const newCafe = { name, address, latitude: parseFloat(lat), longitude: parseFloat(lng) };
-        try {
-        const response = await axios.post('http://localhost:5000/api/cafes', newCafe);
-        setCafes([...cafes, response.data]);
-        setName(''); setAddress(''); setLat(''); setLng('');
-        } catch (error) {
-        console.error('Gagal menambahkan kafe!', error);
-        }
-    };
-
-    // Tampilan Peta (digunakan oleh kedua role)
-    const MapView = () => {
-    const handleMapClick = (latlng) => {
-        // Hanya set lokasi baru jika role adalah admin
-        if (user.role === 'admin') {
-            if (isAddingMode) {
-                setNewCafeLocation(latlng);
-            }
-        }
-    };
-
-        return (
-            <MapContainer center={position} zoom={13} style={{ height: '100vh', width: '100%' }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; OpenStreetMap' />
-
-            {/* Komponen pendengar event klik */}
-            <MapClickHandler onMapClick={handleMapClick} />
-
-            {/* Menampilkan semua kafe yang sudah ada */}
-            {cafes.map(cafe => (
-                <Marker key={cafe.id} position={[cafe.latitude, cafe.longitude]}>
-                <Popup><b>{cafe.name}</b><br />{cafe.address}</Popup>
-                </Marker>
-            ))}
-
-            {/* Menampilkan marker sementara jika admin sudah mengklik lokasi */}
-            {newCafeLocation && (
-                <Marker position={newCafeLocation}>
-                <Popup>
-                    <div>
-                    <p>Lokasi Kafe Baru</p>
-                    <button>Lanjutkan</button>
-                    </div>
-                </Popup>
-                </Marker>
-            )}
-            </MapContainer>
-        );
-    };
-    
-    const [isAddingMode, setIsAddingMode] = useState(false);
-    const handleCafeAdded = (newCafe) => {
-        setCafes([...cafes, newCafe]);
-        setNewCafeLocation(null);
-        setIsAddingMode(false); // <-- Mode menambah dimatikan DI SINI
-    };
-
-
-    // Tampilan loading sampai data user berhasil dibaca
-    if (!user) {
-        return <div>Loading...</div>;
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
     }
+  }, []);
 
-    // Render komponen berdasarkan peran (role)
-    return (
-  <     div className="homepage-container">
-    
-        {user.role === 'admin' && (
-            <button 
-                className="add-location-btn" 
-                onClick={() => setIsAddingMode(!isAddingMode)} // Toggle mode
-            >
-                {isAddingMode ? 'Batal Menambah' : '📍 Tambah Lokasi Baru'}
-            </button>
-        )}
+  return (
+    <div className={styles.landingPageLight}>
+      <Header />
 
-    <Header />
-    <main className="main-content">
-      {newCafeLocation && (
-        <AddCafeModal
-          location={newCafeLocation}
-          onClose={() => setNewCafeLocation(null)}
-          onCafeAdded={handleCafeAdded}
-        />
-         )}
-         <MapView />
-        </main>
-    <Footer />
+      <main className={styles.heroSection}>
+        <div className={styles.heroContent}>
+            <h1>Setiap Sudut Kota Punya Cerita Kopinya.</h1>
+            <p>
+                Platform untuk menemukan, mengulas, dan berbagi kedai kopi favorit.
+                Mulai petualangan kafein Anda bersama kami.
+            </p>
+            <div className={styles.heroButtons}>
+                {/* 4. Buat link tombol menjadi dinamis */}
+                <Link to={isLoggedIn ? '/home' : '/register'} className={`${styles.btnHero} ${styles.primary}`}>
+                    <span>Mulai Menjelajah</span>
+                </Link>
+            </div>
+        </div>
+      </main>
+      
+      <section id="features" className={styles.featureSection}>
+        <div className={styles.sectionHeader}>
+          <h2>Semua yang Anda Butuhkan</h2>
+        </div>
+        <div className={styles.featureCardsContainer}>
+          <div className={styles.featureCard}>
+            <div className={styles.cardIcon}><i className="fas fa-map-marked-alt"></i></div>
+            <h3>Peta Interaktif</h3>
+            <p>Temukan kedai kopi terdekat dengan mudah melalui peta yang responsif.</p>
+          </div>
+          <div className={styles.featureCard}>
+            <div className={styles.cardIcon}><i className="fas fa-star"></i></div>
+            <h3>Ulasan Komunitas</h3>
+            <p>Lihat rating dan ulasan jujur dari para pencinta kopi lainnya.</p>
+          </div>
+          <div className={styles.featureCard}>
+            <div className={styles.cardIcon}><i className="fas fa-book-open"></i></div>
+            <h3>Jurnal Kopi Pribadi</h3>
+            <p>Simpan daftar kedai kopi yang ingin atau sudah Anda kunjungi.</p>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
-    );
-    };
+  );
+};
 
-    export default HomePage;
+export default LandingPage;
