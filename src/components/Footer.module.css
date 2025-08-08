@@ -1,0 +1,46 @@
+.mainFooter {
+  padding: 1rem 5%;
+  border-top: 1px solid var(--border-light);
+  background-color: var(--bg-white);
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footerInfo p {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footerLinks a, .footerSocial a {
+  color: var(--text-gray);
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.footerLinks a:hover, .footerSocial a:hover {
+  color: var(--primary-blue);
+}
+
+.footerSocial {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 1.1rem;
+}
+
+/* Responsiveness untuk footer jika dibutuhkan */
+@media (max-width: 768px) {
+  .footerContent {
+    flex-direction: column;
+  }
+}

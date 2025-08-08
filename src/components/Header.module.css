@@ -1,0 +1,158 @@
+.mainHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 5%;
+  background-color: rgba(255, 241, 228, 0.8);
+  border-bottom: 1px solid var(--border-light);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.logoIcon {
+  color: var(--primary-blue);
+}
+
+.mainNav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  padding: 0.6rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.btnNavPrimary {
+  background-color: var(--primary-color);
+  color: var(--bg-white); 
+}
+
+.btnNavPrimary:hover {
+  background-color: var(--primary-blue-darker);
+}
+
+.btnNavSecondary {
+  background-color: transparent;
+  color: var(--text-dark);
+}
+
+.btnNavSecondary:hover {
+  background-color: rgba(205, 182, 147, 0.2);
+}
+
+/* --- Style untuk Header setelah Login --- */
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.welcomeText {
+  color: var(--text-gray);
+  font-weight: 500;
+}
+
+.btnLogout {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.btnLogout:hover {
+  background-color: var(--primary-color);
+  color: var(--bg-white);
+}
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  position: relative; 
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.userMenu:hover {
+  background-color: rgba(205, 182, 147, 0.2);
+}
+
+.profileInitial {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.userMenu span {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.arrowDown {
+  transition: transform 0.3s ease;
+}
+
+.arrowUp {
+  transform: rotate(180deg);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 110%; 
+  right: 0;
+  background-color: var(--bg-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-light);
+  width: 180px;
+  z-index: 10;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownMenu a,
+.dropdownMenu button {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  width: 100%;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.dropdownMenu a:hover,
+.dropdownMenu button:hover {
+  background-color: var(--bg-light);
+}

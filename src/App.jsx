@@ -4,7 +4,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import LandingPage from './pages/LandingPage';
-import ProtectedRoute from './components/ProtectedRoute'; // <-- Impor penjaga
+import ProtectedRoute from './components/ProtectedRoute';
+import './index.css';
 
 function App() {
   return (

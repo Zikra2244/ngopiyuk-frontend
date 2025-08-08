@@ -1,14 +1,13 @@
-    import React, { useState, useEffect } from 'react';
-    import axios from 'axios';
-    import { jwtDecode } from 'jwt-decode';
-    import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-    import Header from '../components/Header'; // <-- TAMBAHKAN INI
-    import Footer from '../components/Footer'; // <-- TAMBAHKAN INI
-    import '../App.css';
-    import MapClickHandler from '../components/MapClickHandler';
-    import AddCafeModal from '../components/AddCafeModal';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import MapClickHandler from '../components/MapClickHandler';
+import AddCafeModal from '../components/AddCafeModal';
 
-    const HomePage = () => {
+const HomePage = () => {
     const [user, setUser] = useState(null);
     const [cafes, setCafes] = useState([]);
     const position = [-6.2088, 106.8456];
@@ -43,30 +42,27 @@
 
     // Tampilan Peta (digunakan oleh kedua role)
     const MapView = () => {
-    const handleMapClick = (latlng) => {
-        // Hanya set lokasi baru jika role adalah admin
-        if (user.role === 'admin') {
-            if (isAddingMode) {
-                setNewCafeLocation(latlng);
+        const handleMapClick = (latlng) => {
+            // Hanya set lokasi baru jika role adalah admin
+            if (user.role === 'admin') {
+                if (isAddingMode) {
+                    setNewCafeLocation(latlng);
+                }
             }
-        }
-    };
+        };
 
         return (
             <MapContainer center={position} zoom={13} style={{ height: '100vh', width: '100%' }}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; OpenStreetMap' />
 
-            {/* Komponen pendengar event klik */}
             <MapClickHandler onMapClick={handleMapClick} />
 
-            {/* Menampilkan semua kafe yang sudah ada */}
             {cafes.map(cafe => (
                 <Marker key={cafe.id} position={[cafe.latitude, cafe.longitude]}>
                 <Popup><b>{cafe.name}</b><br />{cafe.address}</Popup>
                 </Marker>
             ))}
 
-            {/* Menampilkan marker sementara jika admin sudah mengklik lokasi */}
             {newCafeLocation && (
                 <Marker position={newCafeLocation}>
                 <Popup>
@@ -85,42 +81,40 @@
     const handleCafeAdded = (newCafe) => {
         setCafes([...cafes, newCafe]);
         setNewCafeLocation(null);
-        setIsAddingMode(false); // <-- Mode menambah dimatikan DI SINI
+        setIsAddingMode(false);
     };
 
 
-    // Tampilan loading sampai data user berhasil dibaca
     if (!user) {
         return <div>Loading...</div>;
     }
 
-    // Render komponen berdasarkan peran (role)
     return (
-  <     div className="homepage-container">
+        <div className="homepage-container">
     
         {user.role === 'admin' && (
             <button 
                 className="add-location-btn" 
-                onClick={() => setIsAddingMode(!isAddingMode)} // Toggle mode
+                onClick={() => setIsAddingMode(!isAddingMode)}
             >
                 {isAddingMode ? 'Batal Menambah' : '📍 Tambah Lokasi Baru'}
             </button>
         )}
 
-    <Header />
-    <main className="main-content">
-      {newCafeLocation && (
-        <AddCafeModal
-          location={newCafeLocation}
-          onClose={() => setNewCafeLocation(null)}
-          onCafeAdded={handleCafeAdded}
-        />
-         )}
-         <MapView />
+        <Header />
+        <main className="main-content">
+        {newCafeLocation && (
+            <AddCafeModal
+            location={newCafeLocation}
+            onClose={() => setNewCafeLocation(null)}
+            onCafeAdded={handleCafeAdded}
+            />
+        )}
+        <MapView />
         </main>
-    <Footer />
+        <Footer />
     </div>
     );
-    };
+};
 
-    export default HomePage;
+export default HomePage;

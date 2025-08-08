@@ -1,7 +1,34 @@
 /* frontend/src/index.css */
-body, html, #root {
+/* src/index.css */
+
+:root {
+  /* Variabel warna dari palet kopi Anda */
+  --woodrush: #342716;
+  --irish-coffee: #5D3D1D;
+  --windsor-toffee: #CDB693;
+  --rice-pudding: #FFF1E4;
+
+  /* Variabel yang akan digunakan di seluruh aplikasi */
+  --primary-color: var(--irish-coffee);
+  --primary-color-darker: var(--woodrush);
+  --bg-light: var(--rice-pudding);
+  --bg-white: #ffffff;
+  --text-dark: var(--woodrush);
+  --text-gray: var(--irish-coffee);
+  --border-light: var(--windsor-toffee);
+}
+
+body {
   margin: 0;
   padding: 0;
+  font-family: 'Lexend Deca', sans-serif; /* <-- FONT BARU DITERAPKAN DI SINI */
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+
+/* Biarkan ini untuk memastikan aplikasi mengisi seluruh layar */
+html, #root {
   height: 100%;
   width: 100%;
 }
+
