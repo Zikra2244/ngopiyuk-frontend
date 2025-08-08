@@ -25,13 +25,12 @@ const Header = () => {
         localStorage.removeItem('token');
         setUser(null);
         setDropdownVisible(false);
-        navigate('/login');
+        navigate('/'); // <-- PERUBAHAN DI SINI
     };
 
     return (
         <header className={styles.mainHeader}>
             <div className={styles.logo}>
-                {/* PERUBAHAN DI SINI */}
                 <Link to="/"> 
                     <i className={`fas fa-mug-hot ${styles.logoIcon}`}></i> 
                     NgopiYuk!
