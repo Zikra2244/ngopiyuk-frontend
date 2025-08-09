@@ -1,11 +1,11 @@
 // frontend/src/App.jsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import LandingPage from './pages/LandingPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
+import HomePageRouter from './pages/HomePageRouter';
 
 function App() {
   return (
@@ -19,10 +19,11 @@ function App() {
           path="/home" 
           element={
             <ProtectedRoute>
-              <HomePage />
+              <HomePageRouter />
             </ProtectedRoute>
           } 
         />
+        
       </Routes>
     </BrowserRouter>
   );

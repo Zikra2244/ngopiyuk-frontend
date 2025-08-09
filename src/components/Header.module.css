@@ -1,3 +1,4 @@
+/* frontend/src/components/Header.module.css */
 .mainHeader {
   display: flex;
   justify-content: space-between;
@@ -59,29 +60,6 @@
 }
 
 /* --- Style untuk Header setelah Login --- */
-
-.userMenu {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.welcomeText {
-  color: var(--text-gray);
-  font-weight: 500;
-}
-
-.btnLogout {
-  background-color: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-}
-
-.btnLogout:hover {
-  background-color: var(--primary-color);
-  color: var(--bg-white);
-}
-
 .userMenu {
   display: flex;
   align-items: center;

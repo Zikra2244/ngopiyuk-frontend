@@ -25,25 +25,26 @@ const Header = () => {
         localStorage.removeItem('token');
         setUser(null);
         setDropdownVisible(false);
-        navigate('/'); // <-- PERUBAHAN DI SINI
+        navigate('/'); // Arahkan ke landing page setelah logout
     };
 
     return (
         <header className={styles.mainHeader}>
             <div className={styles.logo}>
-                <Link to="/"> 
+                <Link to={user ? "/home" : "/"}> 
                     <i className={`fas fa-mug-hot ${styles.logoIcon}`}></i> 
                     NgopiYuk!
                 </Link>
             </div>
             <nav className={styles.mainNav}>
                 {user ? (
-                    // TAMPILAN JIKA SUDAH LOGIN
-                    <div className={styles.userMenu} onClick={() => setDropdownVisible(!dropdownVisible)}>
-                        <div className={styles.profileInitial}>{user.email.charAt(0).toUpperCase()}</div>
-                        <span>{user.email}</span>
-                        <i className={`fas fa-chevron-down ${styles.arrowDown} ${dropdownVisible ? styles.arrowUp : ''}`}></i>
-
+                    // Tampilan jika sudah login
+                    <div className={styles.userMenuWrapper}>
+                        <div className={styles.userMenu} onClick={() => setDropdownVisible(!dropdownVisible)}>
+                            <div className={styles.profileInitial}>{user.email.charAt(0).toUpperCase()}</div>
+                            <span>{user.email}</span>
+                            <i className={`fas fa-chevron-down ${styles.arrowDown} ${dropdownVisible ? styles.arrowUp : ''}`}></i>
+                        </div>
                         {dropdownVisible && (
                             <div className={styles.dropdownMenu}>
                                 <Link to="/profile">Lihat Profil</Link>
@@ -52,7 +53,7 @@ const Header = () => {
                         )}
                     </div>
                 ) : (
-                    // TAMPILAN JIKA BELUM LOGIN
+                    // Tampilan jika belum login (di landing page)
                     <>
                         <Link to="/login" className={`${styles.btn} ${styles.btnNavSecondary}`}>Login</Link>
                         <Link to="/register" className={`${styles.btn} ${styles.btnNavPrimary}`}>Register</Link>
