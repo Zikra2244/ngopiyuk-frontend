@@ -115,7 +115,7 @@ const AdminHomePage = () => {
       <div className={styles.mainContent}>
         <aside className={styles.sidebar}>
           <h3>Admin Dashboard</h3>
-          <p>Selamat datang, {user && user.role ? (user.role.charAt(0).toUpperCase() + user.role.slice(1)) : 'Pengguna'}!</p>
+          <p>Selamat datang, {user && user.username}!</p>
           <div className={styles.adminActions}>
              <button 
                 className={styles.addLocationBtn} 

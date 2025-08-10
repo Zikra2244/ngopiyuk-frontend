@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import './Auth.css'; // <-- Impor CSS yang sudah ada
 
 const RegisterPage = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');
@@ -13,7 +14,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { email, password, role });
+      await axios.post('http://localhost:5000/api/auth/register', { username, email, password, role });
       alert('Registrasi berhasil! Silakan login.');
       navigate('/login');
     } catch (error) {
@@ -28,6 +29,15 @@ const RegisterPage = () => {
       <div className="auth-form">
         <h2>Register</h2>
         <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
           <div className="form-group">
             <label>Email</label>
             <input

@@ -15,7 +15,7 @@ const Header = () => {
                 const decodedUser = jwtDecode(token);
                 setUser(decodedUser);
             } catch (error) {
-                console.error("Invalid token:", error);
+                console.error("Token tidak valid:", error);
                 localStorage.removeItem('token');
             }
         }
@@ -31,18 +31,20 @@ const Header = () => {
     return (
         <header className={styles.mainHeader}>
             <div className={styles.logo}>
+                {/* Jika sudah login, logo mengarah ke /home, jika belum ke / */}
                 <Link to={user ? "/home" : "/"}> 
                     <i className={`fas fa-mug-hot ${styles.logoIcon}`}></i> 
                     NgopiYuk!
                 </Link>
             </div>
             <nav className={styles.mainNav}>
-                {user ? (
+                {user && user.username ? ( // Pastikan user dan username ada
                     // Tampilan jika sudah login
                     <div className={styles.userMenuWrapper}>
                         <div className={styles.userMenu} onClick={() => setDropdownVisible(!dropdownVisible)}>
-                            <div className={styles.profileInitial}>{user.email.charAt(0).toUpperCase()}</div>
-                            <span>{user.email}</span>
+                            {/* --- PERUBAHAN DI SINI --- */}
+                            <div className={styles.profileInitial}>{user.username.charAt(0).toUpperCase()}</div>
+                            <span>{user.username}</span>
                             <i className={`fas fa-chevron-down ${styles.arrowDown} ${dropdownVisible ? styles.arrowUp : ''}`}></i>
                         </div>
                         {dropdownVisible && (

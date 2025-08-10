@@ -69,7 +69,7 @@ const AddCafeModal = ({ location, onClose, onCafeAdded }) => {
           </div>
           <div className="modal-actions">
             <button type="button" onClick={onClose} className="btn-secondary">Batal</button>
-       git add .     <button type="submit" className="btn-primary">Simpan Kafe</button>
+            <button type="submit" className="btn-primary">Simpan Kafe</button>
           </div>
         </form>
       </div>
