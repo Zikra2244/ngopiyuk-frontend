@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './HomePage.module.css';
 
-// Impor komponen-komponen yang dibutuhkan
 import Header from '../../components/Header';
 import MapClickHandler from '../../components/MapClickHandler';
 import AddCafeModal from '../../components/AddCafeModal';
 
-// Komponen helper untuk mengatur ulang ukuran peta
 function ResizeMap() {
   const map = useMap();
   useEffect(() => {
@@ -34,7 +33,7 @@ function MapFlyTo({ position }) {
 }
 
 const AdminHomePage = () => {
-  // === STATE MANAGEMENT ===
+  const [user, setUser] = useState(null);
   const [cafes, setCafes] = useState([]);
   const position = [-6.2088, 106.8456]; // Posisi default Jakarta
 
@@ -47,12 +46,18 @@ const AdminHomePage = () => {
   const [filteredCafes, setFilteredCafes] = useState([]);
   const [flyToPosition, setFlyToPosition] = useState(null);
 
+  const markerRefs = useMemo(() => ({}), []);
   // === DATA FETCHING ===
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        try { setUser(jwtDecode(token)); } 
+        catch (error) { console.error("Token tidak valid:", error); }
+    }
     axios.get('http://localhost:5000/api/cafes')
       .then(response => setCafes(response.data))
       .catch(error => console.error('Gagal mengambil data kafe!', error));
-  }, []);
+}, []);
 
   // === HANDLER FUNCTIONS ===
   const handleMapClick = (latlng) => {
@@ -82,10 +87,18 @@ const AdminHomePage = () => {
 
   const handleResultClick = (cafe) => {
     setFlyToPosition([cafe.latitude, cafe.longitude]);
+    setTimeout(() => {
+      const marker = markerRefs[cafe.id];
+      if (marker) {
+        marker.openPopup();
+      }
+    }, 1600);
     setSearchTerm('');
     setFilteredCafes([]);
   };
-
+    if (!user) {
+        return <div>Loading...</div>;
+    }
   // === RENDER COMPONENT ===
   return (
     <div className={styles.homePageWrapper}>
@@ -93,7 +106,7 @@ const AdminHomePage = () => {
       <div className={styles.mainContent}>
         <aside className={styles.sidebar}>
           <h3>Admin Dashboard</h3>
-          <p>Selamat datang, Admin!</p>
+          <p>Selamat datang, {user && (user.role.charAt(0).toUpperCase() + user.role.slice(1))}!</p>
           <div className={styles.adminActions}>
              <button 
                 className={styles.addLocationBtn} 
