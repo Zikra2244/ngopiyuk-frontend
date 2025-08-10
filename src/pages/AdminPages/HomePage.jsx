@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import MapClickHandler from '../../components/MapClickHandler';
 import AddCafeModal from '../../components/AddCafeModal';
 
+// Komponen helper untuk mengatur ulang ukuran peta
 function ResizeMap() {
   const map = useMap();
   useEffect(() => {
@@ -33,6 +34,7 @@ function MapFlyTo({ position }) {
 }
 
 const AdminHomePage = () => {
+  // === STATE MANAGEMENT ===
   const [user, setUser] = useState(null);
   const [cafes, setCafes] = useState([]);
   const position = [-6.2088, 106.8456]; // Posisi default Jakarta
@@ -47,17 +49,22 @@ const AdminHomePage = () => {
   const [flyToPosition, setFlyToPosition] = useState(null);
 
   const markerRefs = useMemo(() => ({}), []);
+
   // === DATA FETCHING ===
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-        try { setUser(jwtDecode(token)); } 
-        catch (error) { console.error("Token tidak valid:", error); }
+        try { const decodedUser = jwtDecode(token);
+        // TAMBAHKAN BARIS INI UNTUK DEBUGGING
+        console.log('ISI TOKEN YANG DIDECODE:', decodedUser); 
+        setUser(decodedUser); 
+      } 
+      catch (error) { console.error("Token tidak valid:", error); }
     }
     axios.get('http://localhost:5000/api/cafes')
       .then(response => setCafes(response.data))
       .catch(error => console.error('Gagal mengambil data kafe!', error));
-}, []);
+  }, []);
 
   // === HANDLER FUNCTIONS ===
   const handleMapClick = (latlng) => {
@@ -96,9 +103,11 @@ const AdminHomePage = () => {
     setSearchTerm('');
     setFilteredCafes([]);
   };
-    if (!user) {
-        return <div>Loading...</div>;
-    }
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   // === RENDER COMPONENT ===
   return (
     <div className={styles.homePageWrapper}>
@@ -106,7 +115,7 @@ const AdminHomePage = () => {
       <div className={styles.mainContent}>
         <aside className={styles.sidebar}>
           <h3>Admin Dashboard</h3>
-          <p>Selamat datang, {user && (user.role.charAt(0).toUpperCase() + user.role.slice(1))}!</p>
+          <p>Selamat datang, {user && user.role ? (user.role.charAt(0).toUpperCase() + user.role.slice(1)) : 'Pengguna'}!</p>
           <div className={styles.adminActions}>
              <button 
                 className={styles.addLocationBtn} 
@@ -164,7 +173,11 @@ const AdminHomePage = () => {
             <MapFlyTo position={flyToPosition} />
 
             {cafes.map(cafe => (
-              <Marker key={cafe.id} position={[cafe.latitude, cafe.longitude]}>
+              <Marker 
+                key={cafe.id} 
+                position={[cafe.latitude, cafe.longitude]}
+                ref={(el) => (markerRefs[cafe.id] = el)}
+              >
                 <Popup>{cafe.name}</Popup>
               </Marker>
             ))}
