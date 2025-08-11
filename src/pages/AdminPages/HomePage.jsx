@@ -8,7 +8,7 @@ import styles from './HomePage.module.css';
 import Header from '../../components/Header';
 import MapClickHandler from '../../components/MapClickHandler';
 import AddCafeModal from '../../components/AddCafeModal';
-
+import AdminReviewModal from '../../components/AdminReviewModal';
 // Komponen helper untuk mengatur ulang ukuran peta
 function ResizeMap() {
   const map = useMap();
@@ -36,12 +36,14 @@ function MapFlyTo({ position }) {
 const AdminHomePage = () => {
   // === STATE MANAGEMENT ===
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [cafes, setCafes] = useState([]);
   const position = [-6.2088, 106.8456]; // Posisi default Jakarta
 
   // State untuk fungsionalitas tambah kafe
   const [isAddingMode, setIsAddingMode] = useState(false);
   const [newCafeLocation, setNewCafeLocation] = useState(null);
+  const [selectedCafe, setSelectedCafe] = useState(null);
 
   // State untuk fungsionalitas search
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,14 +54,15 @@ const AdminHomePage = () => {
 
   // === DATA FETCHING ===
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        try { const decodedUser = jwtDecode(token);
-        // TAMBAHKAN BARIS INI UNTUK DEBUGGING
-        console.log('ISI TOKEN YANG DIDECODE:', decodedUser); 
-        setUser(decodedUser); 
-      } 
-      catch (error) { console.error("Token tidak valid:", error); }
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+        setToken(storedToken); // <-- Perbaikan error: setToken sekarang sudah ada
+        try { 
+            setUser(jwtDecode(storedToken)); 
+        } catch (error) { 
+            console.error("Token tidak valid:", error); 
+            localStorage.removeItem('token');
+        }
     }
     axios.get('http://localhost:5000/api/cafes')
       .then(response => setCafes(response.data))
@@ -135,7 +138,12 @@ const AdminHomePage = () => {
               onCafeAdded={handleCafeAdded}
             />
           )}
-
+          {selectedCafe && (
+            <AdminReviewModal 
+              cafe={selectedCafe} 
+              onClose={() => setSelectedCafe(null)} 
+            />
+          )}
           <div className={styles.mapHeader}>
             <div className={styles.searchContainer}>
               <div className={styles.searchBar}>
@@ -178,7 +186,19 @@ const AdminHomePage = () => {
                 position={[cafe.latitude, cafe.longitude]}
                 ref={(el) => (markerRefs[cafe.id] = el)}
               >
-                <Popup>{cafe.name}</Popup>
+                <Popup>
+                    {/* Menggunakan struktur popup yang sama dengan halaman user */}
+                    <div className={styles.popupCard}>
+                        <img className={styles.popupImage} src={`https://source.unsplash.com/160x90/?coffee-shop,${cafe.id}`} alt="Coffee Shop" />
+                        <div className={styles.popupContent}>
+                            <h4>{cafe.name}</h4>
+                            {/* Tombol ini akan membuka modal ulasan khusus admin */}
+                            <button className={styles.popupBtn} onClick={() => setSelectedCafe(cafe)}>
+                              Lihat Ulasan
+                            </button>
+                        </div>
+                    </div>
+                </Popup>
               </Marker>
             ))}
 

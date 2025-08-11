@@ -1,0 +1,126 @@
+.modalBackdrop {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 3000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px; right: 20px;
+  background: none; border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.2s;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+.address {
+  color: #666;
+  margin-top: -10px;
+}
+
+.reviewsSection, .formSection {
+  margin-top: 1.5rem;
+}
+
+.reviewList {
+  list-style: none; padding: 0;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+
+.reviewItem {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1.5rem;
+}
+
+.reviewItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.reviewItem strong { font-size: 1.1rem; }
+.reviewItem p { margin: 0.5rem 0; line-height: 1.6; }
+.reviewItem small { color: #888; }
+
+.reviewImage {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0.75rem 0;
+}
+
+.formSection form {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.formSection input, .formSection textarea {
+  width: 100%; padding: 12px;
+  border: 1px solid #ccc; border-radius: 5px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.formSection textarea {
+  min-height: 100px; resize: vertical;
+}
+
+.ratingInput {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 0.75rem;
+}
+
+.ratingInput label {
+  font-weight: 500;
+}
+
+.submitButton {
+  padding: 12px 20px; 
+  background-color: var(--primary-color, #8D5B4C);
+  color: white; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+  align-self: flex-start;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background-color: #6b4638;
+}
