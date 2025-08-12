@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import './Auth.css';
+import './LoginPage.css';
+
 
 const LoginPage = () => {
   // State untuk menampung input email dan password

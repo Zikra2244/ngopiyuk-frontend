@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import './Auth.css'; // <-- Impor CSS yang sudah ada
+import './RegisterPage.css'; // CSS baru untuk styling ala landing page
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -14,7 +14,12 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { username, email, password, role });
+      await axios.post('http://localhost:5000/api/auth/register', {
+        username,
+        email,
+        password,
+        role,
+      });
       alert('Registrasi berhasil! Silakan login.');
       navigate('/login');
     } catch (error) {
@@ -24,10 +29,12 @@ const RegisterPage = () => {
   };
 
   return (
-    // Terapkan struktur dan className yang sama seperti LoginPage
-    <div className="auth-container">
-      <div className="auth-form">
-        <h2>Register</h2>
+    <div className="register-page">
+      <div className="register-card">
+        <h2 className="register-title">Buat Akun</h2>
+        <p className="register-subtitle">
+          Gabung dan mulai perjalanan kopi Anda
+        </p>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Username</label>
@@ -36,6 +43,7 @@ const RegisterPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              placeholder="Masukkan username"
             />
           </div>
           <div className="form-group">
@@ -45,6 +53,7 @@ const RegisterPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              placeholder="Masukkan email"
             />
           </div>
           <div className="form-group">
@@ -54,18 +63,24 @@ const RegisterPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              placeholder="Masukkan password"
             />
           </div>
           <div className="form-group">
             <label>Daftar sebagai</label>
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
               <option value="user">User</option>
               <option value="admin">Admin (Pemilik Kafe)</option>
             </select>
           </div>
-          <button type="submit" className="auth-button">Register</button>
+          <button type="submit" className="register-button">
+            Register
+          </button>
         </form>
-        <p className="auth-link">
+        <p className="register-link">
           Sudah punya akun? <Link to="/login">Login di sini</Link>
         </p>
       </div>

@@ -1,0 +1,91 @@
+/* Container utama */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('../assets/BGregister.jpg') no-repeat center center/cover;
+  font-family: Arial, sans-serif;
+}
+
+/* Box form login */
+.auth-form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  box-sizing: border-box;
+}
+
+/* Judul halaman */
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* Label form */
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #444;
+}
+
+/* Input field */
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: #6d4c41;
+  box-shadow: 0 0 5px rgba(255, 123, 0, 0.5);
+}
+
+/* Tombol login */
+.auth-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #6d4c41;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.auth-button:hover {
+  background-color: #5d4037;
+}
+
+/* Link register */
+.auth-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.auth-link a {
+  color: #6d4c41;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,97 @@
+.register-page {
+  background: url('../assets/BGregister.jpg') no-repeat center center / cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Kartu form register */
+.register-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* Judul */
+.register-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4e342e; /* cokelat kopi */
+  margin-bottom: 5px;
+}
+
+/* Subjudul */
+.register-subtitle {
+  font-size: 0.95rem;
+  color: #6d4c41;
+  margin-bottom: 15px;
+}
+
+/* Grup input */
+.form-group {
+  text-align: left;
+  margin-bottom: 5px; /* jarak antar form diperkecil */
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #5d4037;
+  margin-bottom: 3px; /* jarak label ke input lebih rapat */
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #8d6e63;
+}
+
+/* Tombol register */
+.register-button {
+  background-color: #6d4c41; /* cokelat kopi */
+  color: white;
+  padding: 10px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background 0.3s;
+  margin-top: 10px; /* jarak tombol dari input terakhir */
+}
+
+.register-button:hover {
+  background-color: #5d4037;
+}
+
+/* Link login */
+.register-link {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.register-link a {
+  color: #6d4c41;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
