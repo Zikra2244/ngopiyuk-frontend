@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
 import HomePageRouter from './pages/HomePageRouter';
+import ProfilePage from './pages/UserPages/ProfileRoute'; 
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         {/* Bungkus HomePage dengan ProtectedRoute */}
         <Route 
           path="/home" 

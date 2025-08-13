@@ -53,17 +53,17 @@ const HomePage = () => {
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
-        setToken(storedToken); 
-        try { 
-            setUser(jwtDecode(storedToken)); 
-        } catch (error) { 
-            console.error("Token tidak valid:", error); 
-            localStorage.removeItem('token');
-        }
+      setToken(storedToken);
+      try {
+        setUser(jwtDecode(storedToken));
+      } catch (error) {
+        console.error("Token tidak valid:", error);
+        localStorage.removeItem('token');
+      }
     }
     axios.get('http://localhost:5000/api/cafes')
-        .then(response => setCafes(response.data))
-        .catch(error => console.error('Gagal mengambil data kafe!', error));
+      .then(response => setCafes(response.data))
+      .catch(error => console.error('Gagal mengambil data kafe!', error));
   }, []);
 
   // === HANDLER FUNCTIONS ===
@@ -119,18 +119,15 @@ const HomePage = () => {
 
         <div className={styles.mapArea}>
           <div className={styles.mapHeader}>
-            <div className={styles.logo}>
-               <i className="fas fa-mug-hot"></i> NgopiYuk
-            </div>
             <div className={styles.searchContainer}>
               <div className={styles.searchBar}>
-                  <input 
-                    type="text" 
-                    placeholder="Cari tempat ngopi..." 
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                  />
-                  <button><i className="fas fa-search"></i></button>
+                <input
+                  type="text"
+                  placeholder="Cari tempat ngopi..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <button><i className="fas fa-search"></i></button>
               </div>
               {filteredCafes.length > 0 && (
                 <ul className={styles.searchResults}>
@@ -150,28 +147,28 @@ const HomePage = () => {
 
           <MapContainer center={position} zoom={13} className={styles.mapContainer}>
             <TileLayer
-                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             />
             <ResizeMap />
             <MapFlyTo position={flyToPosition} />
             {cafes.map(cafe => (
-              <Marker 
-                key={cafe.id} 
+              <Marker
+                key={cafe.id}
                 position={[cafe.latitude, cafe.longitude]}
                 ref={(el) => (markerRefs[cafe.id] = el)}
               >
                 <Popup>
-                    <div className={styles.popupCard}>
-                        <img className={styles.popupImage} src={`https://source.unsplash.com/160x90/?coffee-shop,${cafe.id}`} alt="Coffee Shop" />
-                        <div className={styles.popupContent}>
-                            <h4>{cafe.name}</h4>
-                            <p>4.5 ★★★★★ (120+)</p>
-                            <button className={styles.popupBtn} onClick={() => setSelectedCafe(cafe)}>
-                              Lihat Ulasan
-                            </button>
-                        </div>
+                  <div className={styles.popupCard}>
+                    <img className={styles.popupImage} src={`https://source.unsplash.com/160x90/?coffee-shop,${cafe.id}`} alt="Coffee Shop" />
+                    <div className={styles.popupContent}>
+                      <h4>{cafe.name}</h4>
+                      <p>4.5 ★★★★★ (120+)</p>
+                      <button className={styles.popupBtn} onClick={() => setSelectedCafe(cafe)}>
+                        Lihat Ulasan
+                      </button>
                     </div>
+                  </div>
                 </Popup>
               </Marker>
             ))}
@@ -180,12 +177,12 @@ const HomePage = () => {
       </div>
 
       {selectedCafe && (
-        <CafeDetailModal 
-          cafe={selectedCafe} 
-          onClose={() => setSelectedCafe(null)} 
+        <CafeDetailModal
+          cafe={selectedCafe}
+          onClose={() => setSelectedCafe(null)}
           token={token}
         />
-      )} 
+      )}
     </div>
   );
 };

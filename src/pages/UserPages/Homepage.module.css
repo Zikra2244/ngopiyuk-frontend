@@ -27,9 +27,12 @@
 }
 
 .sidebar h3 {
-  font-size: 1.2rem;
+  font-size: 1.1rem; /* Sedikit diperkecil agar lebih seimbang */
+  font-weight: 600; /* Sedikit lebih tebal dari normal */
   color: var(--text-dark);
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0; /* Menghapus margin atas, menyisakan margin bawah */
+  padding-bottom: 0.75rem; /* Menambah ruang di bawah judul */
+  border-bottom: 1px solid var(--border-light); /* Garis pemisah halus */
 }
 
 .sidebar ul {
@@ -91,6 +94,7 @@
   align-items: center;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border-light);
+  justify-content: space-between; /* Menjaga jarak antara logo dan search */
 }
 
 .logo {
@@ -106,7 +110,7 @@
   color: var(--primary-color);
 }
 
-.searchBar {
+/* .searchBar {
   margin-left: auto;
   display: flex;
   align-items: center;
@@ -114,7 +118,7 @@
   border-radius: 8px;
   padding: 0.5rem 1rem;
   width: 300px;
-}
+} */
 
 .searchBar input {
   border: none;
@@ -189,9 +193,20 @@
 
 /* Tambahkan ini ke HomePage.module.css Anda */
 .searchContainer {
-  position: relative; /* Penting untuk posisi daftar hasil */
-  margin-left: auto;
-  width: 300px;
+  flex-grow: 1; /* KUNCI 1: Biarkan container ini mengisi ruang kosong */
+  display: flex; /* Mengatur isinya (search bar) */
+  justify-content: center; /* KUNCI 2: Memusatkan search bar di tengah */
+  position: relative; /* Tetap penting untuk posisi hasil pencarian */
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-light);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  width: 100%; /* Lebar relatif terhadap searchContainer */
+  max-width: 400px; /* Atur lebar maksimal search bar */
 }
 
 .searchResults {

@@ -32,8 +32,8 @@ const Header = () => {
         <header className={styles.mainHeader}>
             <div className={styles.logo}>
                 {/* Jika sudah login, logo mengarah ke /home, jika belum ke / */}
-                <Link to={user ? "/home" : "/"}> 
-                    <i className={`fas fa-mug-hot ${styles.logoIcon}`}></i> 
+                <Link to={user ? "/home" : "/"}>
+                    <i className={`fas fa-mug-hot ${styles.logoIcon}`}></i>
                     NgopiYuk!
                 </Link>
             </div>
@@ -49,6 +49,7 @@ const Header = () => {
                         </div>
                         {dropdownVisible && (
                             <div className={styles.dropdownMenu}>
+                                <Link to="/">Home</Link>
                                 <Link to="/profile">Lihat Profil</Link>
                                 <button onClick={handleLogout}>Logout</button>
                             </div>
