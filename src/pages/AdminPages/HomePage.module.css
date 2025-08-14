@@ -151,7 +151,7 @@
   color: #333;
 }
 .popupContent p {
-  margin: 0 0 15px 0; /* Beri jarak bawah lebih besar */
+  margin: 0 0 15px 0;
   font-size: 0.9rem;
   color: #666;
 }
@@ -167,7 +167,7 @@
   border: none;
   border-radius: 6px;
   font-weight: 500;
-  background-color: #6d4c41; /* Warna berbeda untuk admin */
+  background-color: #6d4c41; 
   color: white;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -196,9 +196,25 @@
   background-color: #503932;
 }
 .deleteBtn {
-  background-color: #6d4c41; /* Merah */
+  background-color: #6d4c41;
 }
 .deleteBtn:hover {
   background-color: #503932;
 }
+.popupRating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
 
+.popupRating span:first-child {
+  font-weight: bold;
+}
+
+.noReviews {
+  font-style: italic;
+  color: #888;
+}

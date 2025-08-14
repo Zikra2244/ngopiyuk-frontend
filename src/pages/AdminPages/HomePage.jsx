@@ -10,7 +10,7 @@ import MapClickHandler from '../../components/MapClickHandler';
 import AddCafeModal from '../../components/AddCafeModal';
 import AdminReviewModal from '../../components/AdminReviewModal';
 import EditCafeModal from '../../components/EditCafeModal';
-
+import { Rating } from 'react-simple-star-rating';
 // Komponen helper bisa diletakkan di luar komponen utama agar tidak didefinisikan ulang setiap render
 function ResizeMap() {
   const map = useMap();
@@ -190,7 +190,24 @@ const AdminHomePage = () => {
                     )}
                     <div className={styles.popupContent}>
                       <h4>{cafe.name}</h4>
-                      <p>{cafe.address}</p>
+                      <div className={styles.popupRating}>
+                      {cafe.reviewCount > 0 ? (
+                        <>
+                          <span>{parseFloat(cafe.avgRating).toFixed(1)}</span>
+                          <Rating
+                            initialValue={parseFloat(cafe.avgRating)}
+                            readonly
+                            size={20}
+                            fillColor="#FFC107"
+                            allowFraction
+                          />
+                          <span>({cafe.reviewCount})</span>
+                        </>
+                      ) : (
+                        <span className={styles.noReviews}>Belum ada ulasan</span>
+                      )}
+                    </div>
+                    <p>{cafe.address}</p>
                       {user && cafe.userId === user.id && (
                         <div className={styles.popupActions}>
                           <button className={`${styles.popupBtn} ${styles.editBtn}`} onClick={() => setEditingCafe(cafe)}>
