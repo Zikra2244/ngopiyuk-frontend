@@ -11,7 +11,6 @@ import AddCafeModal from '../../components/AddCafeModal';
 import AdminReviewModal from '../../components/AdminReviewModal';
 import EditCafeModal from '../../components/EditCafeModal';
 import { Rating } from 'react-simple-star-rating';
-// Komponen helper bisa diletakkan di luar komponen utama agar tidak didefinisikan ulang setiap render
 function ResizeMap() {
   const map = useMap();
   useEffect(() => {
@@ -31,9 +30,7 @@ function MapFlyTo({ position }) {
   return null;
 }
 
-// Komponen Utama
 const AdminHomePage = () => {
-  // === STATE MANAGEMENT ===
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [cafes, setCafes] = useState([]);
@@ -47,7 +44,6 @@ const AdminHomePage = () => {
   const markerRefs = useMemo(() => ({}), []);
   const [editingCafe, setEditingCafe] = useState(null);
 
-  // === DATA FETCHING & AUTHENTICATION CHECK ===
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
@@ -64,7 +60,6 @@ const AdminHomePage = () => {
       .catch(error => console.error('Gagal mengambil data kafe!', error));
   }, []);
 
-  // === HANDLER FUNCTIONS (SEMUA HARUS DI DALAM KOMPONEN) ===
   const handleMapClick = (latlng) => {
     if (isAddingMode) setNewCafeLocation(latlng);
   };
@@ -125,7 +120,6 @@ const AdminHomePage = () => {
     return <div>Loading...</div>;
   }
 
-  // === RENDER COMPONENT ===
   return (
     <div className={styles.homePageWrapper}>
       <Header />

@@ -1,21 +1,18 @@
-/* src/pages/HomePage.module.css */
-
 .homePageWrapper {
   display: flex;
-  flex-direction: column; /* Mengatur Header di atas, konten di bawah */
+  flex-direction: column; 
   height: 100vh;
-  background-color: #f0f2f5; /* Warna latar abu-abu muda */
+  background-color: #f0f2f5;
 }
 
 .mainContent {
   display: flex;
-  flex-grow: 1; /* Mengisi sisa ruang setelah header */
+  flex-grow: 1; 
   padding: 1.5rem;
   gap: 1.5rem;
-  overflow: hidden; /* Mencegah scroll yang tidak perlu */
+  overflow: hidden; 
 }
 
-/* --- Sidebar (Kolom Kiri) --- */
 .sidebar {
   width: 300px;
   flex-shrink: 0;
@@ -27,12 +24,12 @@
 }
 
 .sidebar h3 {
-  font-size: 1.1rem; /* Sedikit diperkecil agar lebih seimbang */
-  font-weight: 600; /* Sedikit lebih tebal dari normal */
+  font-size: 1.1rem;
+  font-weight: 600; 
   color: var(--text-dark);
-  margin: 0 0 1.5rem 0; /* Menghapus margin atas, menyisakan margin bawah */
-  padding-bottom: 0.75rem; /* Menambah ruang di bawah judul */
-  border-bottom: 1px solid var(--border-light); /* Garis pemisah halus */
+  margin: 0 0 1.5rem 0; 
+  padding-bottom: 0.75rem; 
+  border-bottom: 1px solid var(--border-light);
 }
 
 .sidebar ul {
@@ -77,8 +74,6 @@
   margin: 0;
 }
 
-
-/* --- Map Area (Kolom Kanan) --- */
 .mapArea {
   flex-grow: 1;
   display: flex;
@@ -86,7 +81,7 @@
   background-color: var(--bg-white);
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  overflow: hidden; /* Penting untuk border-radius peta */
+  overflow: hidden; 
 }
 
 .mapHeader {
@@ -94,7 +89,7 @@
   align-items: center;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border-light);
-  justify-content: space-between; /* Menjaga jarak antara logo dan search */
+  justify-content: space-between;
 }
 
 .logo {
@@ -135,36 +130,43 @@
   color: var(--text-gray);
 }
 
-/* --- Map & Popup Styling --- */
 .mapContainer {
   flex-grow: 1;
   width: 100%;
 }
 
 .popupCard {
-  width: 250px;
+  width: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
 }
 
 .popupImage {
   width: 100%;
-  height: 90px;
+  max-height: 150px;
+  padding: 20px 0;
   object-fit: cover;
   display: block;
+  box-sizing: border-box;
 }
 
 .popupContent {
-  padding: 1rem;
+  padding: 15px 15px 20px;
+  text-align: left;
 }
 
 .popupContent h4 {
-  margin: 0 0 0.5rem;
-  color: var(--text-dark);
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .popupContent p {
-  margin: 0 0 1rem;
-  font-size: 0.8rem;
-  color: var(--text-gray);
+  margin: 0 0 15px 0;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .popupBtn {
@@ -191,12 +193,12 @@
   display: none;
 }
 
-/* Tambahkan ini ke HomePage.module.css Anda */
+
 .searchContainer {
-  flex-grow: 1; /* KUNCI 1: Biarkan container ini mengisi ruang kosong */
-  display: flex; /* Mengatur isinya (search bar) */
-  justify-content: center; /* KUNCI 2: Memusatkan search bar di tengah */
-  position: relative; /* Tetap penting untuk posisi hasil pencarian */
+  flex-grow: 1; 
+  display: flex; 
+  justify-content: center;
+  position: relative; 
 }
 
 .searchBar {
@@ -205,8 +207,8 @@
   background-color: var(--bg-light);
   border-radius: 8px;
   padding: 0.5rem 1rem;
-  width: 100%; /* Lebar relatif terhadap searchContainer */
-  max-width: 400px; /* Atur lebar maksimal search bar */
+  width: 100%;
+  max-width: 400px;
 }
 
 .searchResults {
@@ -214,7 +216,7 @@
   padding: 0;
   margin: 0;
   position: absolute;
-  top: 100%; /* Tampil tepat di bawah search bar */
+  top: 100%; 
   left: 0;
   right: 0;
   background-color: #fff;
