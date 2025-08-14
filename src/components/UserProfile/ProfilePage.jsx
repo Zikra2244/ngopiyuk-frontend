@@ -3,6 +3,8 @@ import styles from './ProfilePage.module.css';
 
 const ProfilePage = () => {
   // State untuk data user
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempUsername, setTempUsername] = useState('');
   const [userData, setUserData] = useState({
     username: 'Username',
     email: 'user@example.com',
@@ -25,6 +27,11 @@ const ProfilePage = () => {
       };
       reader.readAsDataURL(e.target.files[0]);
     }
+  };
+
+  const updateUsername = () => {
+    setUserData(prev => ({ ...prev, username: tempUsername }));
+    setIsEditing(false); // Keluar dari mode edit setelah menyimpan
   };
 
   return (
