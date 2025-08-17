@@ -106,7 +106,6 @@ const UserHomePage = () => {
         <div className={styles.mapArea}>
           <div className={styles.mapHeader}>
             <div className={styles.logo}>
-               <i className="fas fa-mug-hot"></i> NgopiYuk
             </div>
             <div className={styles.searchContainer}>
               <div className={styles.searchBar}>

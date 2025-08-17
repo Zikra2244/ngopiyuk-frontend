@@ -1,5 +1,5 @@
 // frontend/src/App.jsx
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import LandingPage from './pages/LandingPage';
@@ -12,11 +12,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rute Publik */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        {/* Bungkus HomePage dengan ProtectedRoute */}
+        
+        {/* Rute yang Dilindungi (Harus Login) */}
         <Route 
           path="/home" 
           element={
@@ -25,7 +26,9 @@ function App() {
             </ProtectedRoute>
           } 
         />
-        <Route path="/profile" element={
+        <Route 
+          path="/profile" 
+          element={
             <ProtectedRoute>
               <ProfilePage />
             </ProtectedRoute>

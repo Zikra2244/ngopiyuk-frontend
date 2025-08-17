@@ -72,29 +72,34 @@
   border-bottom: 1px solid #eee;
 }
 .searchContainer {
-  position: relative;
-  width: 100%;
+  flex-grow: 1; 
+  display: flex; 
+  justify-content: center;
+  position: relative; 
 }
 .searchBar {
   display: flex;
   align-items: center;
-  background-color: #f0f2f5;
+  background-color: var(--bg-light);
   border-radius: 8px;
   padding: 0.5rem 1rem;
   width: 100%;
+  max-width: 400px;
 }
+
 .searchBar input {
   border: none;
   outline: none;
   background: transparent;
   width: 100%;
-  color: #333;
+  color: var(--text-dark);
 }
+
 .searchBar button {
   border: none;
   background: none;
   cursor: pointer;
-  color: #666;
+  color: var(--text-gray);
 }
 
 .searchResults {

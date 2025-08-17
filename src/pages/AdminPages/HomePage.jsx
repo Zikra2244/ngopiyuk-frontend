@@ -71,7 +71,7 @@ const AdminHomePage = () => {
   };
 
   const handleCafeUpdated = (updatedCafe) => {
-    setCafes(prevCafes => 
+    setCafes(prevCafes =>
       prevCafes.map(c => (c.id === updatedCafe.id ? updatedCafe : c))
     );
   };
@@ -150,9 +150,11 @@ const AdminHomePage = () => {
             />
           )}
           <div className={styles.mapHeader}>
+            <div className={styles.logo}>
+            </div>
             <div className={styles.searchContainer}>
               <div className={styles.searchBar}>
-                <input type="text" placeholder="Cari kafe yang sudah ada..." value={searchTerm} onChange={handleSearchChange} />
+                <input type="text" placeholder="Cari kafe yang sudah ada" value={searchTerm} onChange={handleSearchChange} />
                 <button><i className="fas fa-search"></i></button>
               </div>
               {filteredCafes.length > 0 && (
@@ -176,32 +178,32 @@ const AdminHomePage = () => {
                 <Popup>
                   <div className={styles.popupCard}>
                     {cafe.photoUrl && (
-                      <img 
-                        className={styles.popupImage} 
-                        src={`http://localhost:5000/${cafe.photoUrl}`} 
-                        alt={cafe.name} 
+                      <img
+                        className={styles.popupImage}
+                        src={`http://localhost:5000/${cafe.photoUrl}`}
+                        alt={cafe.name}
                       />
                     )}
                     <div className={styles.popupContent}>
                       <h4>{cafe.name}</h4>
                       <div className={styles.popupRating}>
-                      {cafe.reviewCount > 0 ? (
-                        <>
-                          <span>{parseFloat(cafe.avgRating).toFixed(1)}</span>
-                          <Rating
-                            initialValue={parseFloat(cafe.avgRating)}
-                            readonly
-                            size={20}
-                            fillColor="#FFC107"
-                            allowFraction
-                          />
-                          <span>({cafe.reviewCount})</span>
-                        </>
-                      ) : (
-                        <span className={styles.noReviews}>Belum ada ulasan</span>
-                      )}
-                    </div>
-                    <p>{cafe.address}</p>
+                        {cafe.reviewCount > 0 ? (
+                          <>
+                            <span>{parseFloat(cafe.avgRating).toFixed(1)}</span>
+                            <Rating
+                              initialValue={parseFloat(cafe.avgRating)}
+                              readonly
+                              size={20}
+                              fillColor="#FFC107"
+                              allowFraction
+                            />
+                            <span>({cafe.reviewCount})</span>
+                          </>
+                        ) : (
+                          <span className={styles.noReviews}>Belum ada ulasan</span>
+                        )}
+                      </div>
+                      <p>{cafe.address}</p>
                       {user && cafe.userId === user.id && (
                         <div className={styles.popupActions}>
                           <button className={`${styles.popupBtn} ${styles.editBtn}`} onClick={() => setEditingCafe(cafe)}>

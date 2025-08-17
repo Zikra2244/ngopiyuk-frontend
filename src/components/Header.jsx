@@ -50,7 +50,12 @@ const Header = () => {
                         {dropdownVisible && (
                             <div className={styles.dropdownMenu}>
                                 <Link to="/">Home</Link>
-                                <Link to="/profile">Lihat Profil</Link>
+
+                                {/* HANYA TAMPILKAN JIKA ROLE ADALAH 'USER' */}
+                                {user && user.role === 'user' && (
+                                    <Link to="/profile">Lihat Profil</Link>
+                                )}
+
                                 <button onClick={handleLogout}>Logout</button>
                             </div>
                         )}

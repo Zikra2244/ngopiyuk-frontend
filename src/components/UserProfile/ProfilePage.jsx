@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './ProfilePage.module.css';
 import Header from '../Header'; // Pastikan Header diimpor untuk navigasi
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const ProfilePage = () => {
   // State untuk data user dan status UI
@@ -9,6 +11,7 @@ const ProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [tempUsername, setTempUsername] = useState('');
+  const navigate = useNavigate();
 
   // 1. Mengambil data profil dari backend saat halaman dimuat
   useEffect(() => {
@@ -16,10 +19,19 @@ const ProfilePage = () => {
       const token = localStorage.getItem('token');
       if (!token) {
         setIsLoading(false);
+        navigate('/login');
         return; 
       }
       
       try {
+        // 3. Logika untuk memeriksa peran dan mengalihkan admin
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.role === 'admin') {
+          // Jika role adalah admin, alihkan ke halaman lain dan hentikan proses
+          alert("Admin tidak memiliki halaman profil."); // Opsional: Beri notifikasi
+          navigate('/admin/dashboard'); // Ganti dengan rute dashboard admin Anda
+          return;
+        }
         const response = await axios.get('http://localhost:5000/api/users/profile', {
           headers: { Authorization: 'Bearer ' + token }
         });
@@ -33,7 +45,7 @@ const ProfilePage = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [navigate]);
 
   // 2. Fungsi untuk update username ke backend
   const handleUpdateUsername = async () => {
