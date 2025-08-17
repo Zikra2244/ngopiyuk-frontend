@@ -16,7 +16,6 @@ const ProfilePage = () => {
       const token = localStorage.getItem('token');
       if (!token) {
         setIsLoading(false);
-        // Idealnya, ProtectedRoute akan menangani ini, tapi ini sebagai penjaga
         return; 
       }
       
@@ -42,10 +41,10 @@ const ProfilePage = () => {
     try {
       const response = await axios.put(
         'http://localhost:5000/api/users/profile',
-        { username: tempUsername, email: userData.email }, // Kirim email juga jika dibutuhkan validasi
+        { username: tempUsername, email: userData.email },
         { headers: { Authorization: 'Bearer ' + token } }
       );
-      // Perbarui state dengan data terbaru dari server
+      // Perbarui state dengan data terbaru dari server dan beri notifikasi
       setUserData(prev => ({ ...prev, username: response.data.username }));
       setIsEditing(false);
       alert('Username berhasil diperbarui!');
@@ -67,12 +66,14 @@ const ProfilePage = () => {
         const response = await axios.put(
           'http://localhost:5000/api/users/profile/avatar',
           formData,
-          { headers: { 
-              Authorization: 'Bearer ' + token
+          { 
+            headers: { 
+              Authorization: 'Bearer ' + token,
+              // 'Content-Type': 'multipart/form-data' tidak perlu diatur manual, Axios melakukannya otomatis untuk FormData
             } 
           }
         );
-        // Perbarui state dengan path avatar baru dari server
+        // Perbarui state dengan path avatar baru dari server dan beri notifikasi
         setUserData(prev => ({ ...prev, avatar: response.data.avatar }));
         alert('Foto profil berhasil diperbarui!');
       } catch (error) {
@@ -95,7 +96,7 @@ const ProfilePage = () => {
   // Tampilan jika gagal memuat atau tidak ada data
   if (!userData) {
     return (
-       <>
+      <>
         <Header />
         <div className={styles.loadingContainer}>Gagal memuat profil. Silakan coba login kembali.</div>
       </>
@@ -134,9 +135,9 @@ const ProfilePage = () => {
                 <>
                   <h1 className={styles.username}>{userData.username}</h1>
                   <button className={styles.editUsernameBtn} onClick={() => {
-                      setTempUsername(userData.username);
+                      setTempUsername(userData.username); // Reset tempUsername saat tombol edit diklik
                       setIsEditing(true);
-                  }}>
+                    }}>
                     <span className={styles.btnIcon}>✏️</span> Edit Username
                   </button>
                 </>
