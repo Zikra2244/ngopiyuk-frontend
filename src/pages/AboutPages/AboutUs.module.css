@@ -1,0 +1,118 @@
+/* Mengatur wadah utama halaman agar rapi dan terpusat */
+.pageWrapper {
+  max-width: 1100px;
+  margin: 4rem auto; /* Jarak atas/bawah dan otomatis terpusat */
+  padding: 0 2rem;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+}
+
+/* --- Bagian Perkenalan & Cerita --- */
+.introSection {
+  margin-bottom: 5rem;
+}
+
+.introContent {
+  display: flex;
+  align-items: center;
+  gap: 4rem; /* Jarak antara teks dan gambar */
+}
+
+.introText {
+  flex: 1; /* Mengambil sisa ruang yang tersedia */
+}
+
+.mainTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.introText p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-gray);
+}
+
+.introImageContainer {
+  flex: 1;
+}
+
+.introImage {
+  width: 100%;
+  height: auto;
+  border-radius: 16px; /* Sudut lebih tumpul */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.introImage:hover {
+  transform: scale(1.03);
+}
+
+
+/* --- Bagian Nilai Utama Kami --- */
+.valuesSection {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #f9f9f9; /* Latar belakang sedikit berbeda */
+  border-radius: 20px;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Selalu 3 kolom di layar besar */
+  gap: 2rem;
+}
+
+.valueCard {
+  background-color: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.valueCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.valueIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.valueTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.valueDesc {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  line-height: 1.6;
+}
+
+/* --- Penyesuaian untuk Layar Kecil (Responsive) --- */
+@media (max-width: 768px) {
+  .introContent {
+    flex-direction: column; /* Tumpuk teks dan gambar */
+    gap: 2rem;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr; /* Satu kolom di layar kecil */
+  }
+
+  .mainTitle {
+    font-size: 2rem;
+  }
+}
