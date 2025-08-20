@@ -29,6 +29,11 @@ const AboutUs = () => {
       <div className={styles.aboutPage}>
         <main className={styles.pageWrapper}>
 
+           <Link to="/" className={styles.backButton}>
+            <i className="fas fa-arrow-left"></i>
+            <span>Kembali ke Beranda</span>
+          </Link>
+
           <section className={styles.imageGrid}>
             <div className={styles.mainImageContainer}>
               <img src={aboutMain} alt="Suasana event NgopiYuk" />

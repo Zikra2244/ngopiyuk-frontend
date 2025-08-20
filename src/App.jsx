@@ -8,6 +8,7 @@ import './index.css';
 import HomePageRouter from './pages/HomePageRouter';
 import ProfilePage from './pages/UserPages/ProfileRoute';
 import AboutUs from './pages/AboutPages/AboutUs'; // Add this import
+import HelpPage from './pages/HelpPages/HelpPage';
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/about" element={<AboutUs />} /> {/* Public about page */}
-        
+        <Route path="/tentang" element={<AboutUs />} /> 
+        <Route path="/bantuan" element={<HelpPage />} />
+
         {/* Protected Routes (Require Login) */}
         <Route 
           path="/home" 

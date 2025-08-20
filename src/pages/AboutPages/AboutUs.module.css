@@ -1,7 +1,7 @@
 /* TAMBAHKAN CLASS INI DI BAGIAN ATAS */
 .aboutPage {
   background-color: #f9fafb; /* Warna abu-abu yang sangat terang */
-  padding: 4rem 0;
+  padding: 2rem 0;
 }
 
 /* UBAH MARGIN PADA CLASS INI */
@@ -12,6 +12,31 @@
   font-family: 'Lexend Deca', sans-serif;
   color: var(--text-dark);
 }
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem; /* Jarak ke konten di bawahnya */
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-gray);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.backButton:hover {
+  color: var(--text-dark);
+}
+
+.backButton i {
+  transition: transform 0.2s ease;
+}
+
+.backButton:hover i {
+  transform: translateX(-3px); /* Efek panah sedikit bergerak saat hover */
+}
+
 /* --- Grid Gambar Atas --- */
 .imageGrid {
   display: grid;

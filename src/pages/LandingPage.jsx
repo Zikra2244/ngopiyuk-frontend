@@ -1,11 +1,44 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, useRef } from 'react'; 
 import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.css';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+const useScrollAnimation = () => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(styles.visible);
+            observer.unobserve(entry.target); // Hentikan observasi setelah animasi berjalan
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Animasi berjalan saat 10% elemen terlihat
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return ref;
+};
+
 const LandingPage = () => {
+  const featuresRef = useScrollAnimation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -26,7 +59,6 @@ const LandingPage = () => {
                 Di setiap sudut kota selalu ada cerita yang lahir dari secangkir kopi. NgopiYuk hadir untuk menemani perjalananmu menemukan kedai kopi dengan rasa, suasana, dan pengalaman yang paling sesuai untukmu.
             </p>
             <div className={styles.heroButtons}>
-                {/* 4. Buat link tombol menjadi dinamis */}
                 <Link to={isLoggedIn ? '/home' : '/register'} className={`${styles.btnHero} ${styles.primary}`}>
                     <span>Mulai Menjelajah</span>
                 </Link>
@@ -34,7 +66,7 @@ const LandingPage = () => {
         </div>
       </main>
       
-      <section id="features" className={styles.featureSection}>
+      <section ref={featuresRef} id="features" className={`${styles.featureSection} ${styles.hidden}`}>
         <div className={styles.sectionHeader}>
           <h2>Semua yang Anda Butuhkan</h2>
         </div>

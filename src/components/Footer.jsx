@@ -10,9 +10,9 @@ const Footer = () => {
           <p>&copy; 2025 NgopiYuk!. All Rights Reserved.</p>
         </div>
         <div className={styles.footerLinks}>
-          <Link to="/help">Help</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/bantuan">Bantuan</Link>
+          <Link to="/tentang">Tentang</Link>
+          <Link to="/hubungi">Hubungi Kami</Link>
         </div>
         <div className={styles.footerSocial}>
           <a href="#" aria-label="Twitter"><i className="fab fa-twitter"></i></a>

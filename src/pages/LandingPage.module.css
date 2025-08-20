@@ -1,3 +1,15 @@
+.hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
 /* --- HERO SECTION --- */
 .heroSection {
   display: flex;
@@ -36,10 +48,12 @@
   position: relative;
   z-index: 2;
 }
+
 .heroContent h1, .heroContent p {
   color: #FFF1E4; 
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
 }
+
 .heroContent h1 {
   font-size: 3rem;
   font-weight: 700;
@@ -123,4 +137,23 @@
 }
 .showcaseImageContainer img {
   width: 100%; display: block; border-radius: 8px;
+}
+
+/* 3. Definisi Animasi (Keyframes) */
+/* Tambahkan ini di bagian paling bawah file CSS Anda */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px); /* Mulai dari bawah */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Selesai di posisi asli */
+  }
+}
+
+/* Penyesuaian kecil agar animasi kartu lebih bagus */
+.featureCard.visible {
+  /* Beri jeda animasi yang berbeda untuk setiap kartu */
+  animation-delay: calc(var(--card-index) * 0.2s);
 }
