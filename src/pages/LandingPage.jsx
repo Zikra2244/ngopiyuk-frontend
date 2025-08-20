@@ -23,8 +23,7 @@ const LandingPage = () => {
         <div className={styles.heroContent}>
             <h1>Setiap Sudut Kota Punya Cerita Kopinya.</h1>
             <p>
-                Platform untuk menemukan, mengulas, dan berbagi kedai kopi favorit.
-                Mulai petualangan kafein Anda bersama kami.
+                Di setiap sudut kota selalu ada cerita yang lahir dari secangkir kopi. NgopiYuk hadir untuk menemani perjalananmu menemukan kedai kopi dengan rasa, suasana, dan pengalaman yang paling sesuai untukmu.
             </p>
             <div className={styles.heroButtons}>
                 {/* 4. Buat link tombol menjadi dinamis */}
