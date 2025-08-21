@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react'; // 1. Impor useState dan useEffect
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './AboutUs.module.css';
-
-// 1. Impor Header dan Footer
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-
-// Impor gambar-gambar yang dibutuhkan
 import aboutMain from '../../assets/about-main.jpg';
 import aboutSub1 from '../../assets/about-sub1.jpeg';
 import aboutSub2 from '../../assets/about-sub2.jpeg';
@@ -19,13 +15,12 @@ const AboutUs = () => {
     if (token) {
       setIsLoggedIn(true);
     }
-  }, []); // [] berarti efek ini hanya berjalan sekali saat komponen dimuat
+  }, []); 
 
   return (
     <>
       <Header />
 
-      {/* 2. Bungkus semua konten dengan div baru untuk background */}
       <div className={styles.aboutPage}>
         <main className={styles.pageWrapper}>
 

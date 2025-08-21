@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './HelpPage.module.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import faqIllustration from '../../assets/faq-illustration.svg'; // Anda perlu menyiapkan gambar ilustrasi
+import faqIllustration from '../../assets/faq-illustration.svg';
 
-// Data untuk FAQ agar mudah dikelola
 const faqData = [
   {
     category: 'Cara Kerja NgopiYuk!',
@@ -44,7 +44,6 @@ const faqData = [
   }
 ];
 
-// Komponen Akordeon
 const AccordionItem = ({ item, isOpen, onClick }) => {
   return (
     <div className={styles.accordionItem}>
@@ -69,38 +68,47 @@ const HelpPage = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    alert("Terima kasih! Pesan Anda telah terkirim.");
-    e.target.reset();
-  };
+  const leftColumnData = faqData.slice(0, 2);
+  const rightColumnData = faqData.slice(2, 4);
+
+  // const handleFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   alert("Terima kasih! Pesan Anda telah terkirim.");
+  //   e.target.reset();
+  // };
 
   return (
     <>
       <Header />
       <div className={styles.helpPage}>
-        {/* --- HERO SECTION BARU --- */}
-        <section className={styles.heroSection}>
+        {/* <section className={styles.heroSection}>
           <div className={styles.heroOverlay}></div>
           <div className={styles.heroContent}>
             <h1>Bagaimana Kami Bisa Membantu?</h1>
             <p>Temukan jawaban yang Anda butuhkan atau hubungi tim kami secara langsung.</p>
           </div>
-          <div className={styles.heroImage}>
-            <img src={faqIllustration} alt="Ilustrasi orang bertanya" />
-          </div>
+        </section> */}
 
-        </section>
-
-        {/* --- KONTEN UTAMA BARU (Dua Kolom) --- */}
+         {/* --- KONTEN UTAMA DENGAN STRUKTUR BARU --- */}
         <main className={styles.mainContentWrapper}>
-          <div className={styles.mainContent}>
-            
-            {/* Kolom Kiri: Daftar FAQ */}
-            <div className={styles.faqList}>
-              {faqData.map((category, catIndex) => (
-                <div key={catIndex} className={styles.faqCategory}>
-                  <h2 className={styles.categoryTitle}>{category.category}</h2>
+          <Link to="/" className={styles.backButton}>
+            <i className="fas fa-arrow-left"></i>
+            <span>Kembali ke Beranda</span>
+          </Link>
+
+          <div className={styles.pageHeader}>
+            <span className={styles.subheading}>QUESTIONS / ANSWERS</span>
+            <h2>Frequently Asked Questions</h2>
+            <p>Temukan jawaban yang Anda butuhkan.</p>
+          </div>
+          
+          {/* ▼▼▼ UBAH STRUKTUR GRID DI SINI ▼▼▼ */}
+          <div className={styles.faqGrid}>
+            {faqData.map((category, catIndex) => (
+              // Setiap kategori sekarang menjadi sebuah "kartu" di dalam grid
+              <div key={catIndex} className={styles.faqCategoryCard}>
+                <h3 className={styles.categoryTitle}>{category.category}</h3>
+                <div className={styles.accordion}>
                   {category.questions.map((item, itemIndex) => {
                     if (!item.q) return null;
                     const fullIndex = `${catIndex}-${itemIndex}`;
@@ -114,36 +122,15 @@ const HelpPage = () => {
                     );
                   })}
                 </div>
-              ))}
-            </div>
-
-            {/* Kolom Kanan: Formulir Kontak */}
-            <aside className={styles.contactFormCard}>
-              <h3>Masih Punya Pertanyaan?</h3>
-              <p>Jika Anda tidak menemukan jawaban, jangan ragu untuk menghubungi kami.</p>
-              <form onSubmit={handleFormSubmit}>
-                <div className={styles.formGroup}>
-                  <label htmlFor="name">Nama Anda</label>
-                  <input type="text" id="name" required />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="email">Email Anda</label>
-                  <input type="email" id="email" required />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="message">Pesan Anda</label>
-                  <textarea id="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" className={styles.submitButton}>Kirim Pesan</button>
-              </form>
-            </aside>
-
+              </div>
+            ))}
           </div>
+          {/* ▲▲▲ AKHIR DARI PERUBAHAN GRID ▲▲▲ */}
+
         </main>
       </div>
       <Footer />
     </>
   );
 };
-
 export default HelpPage;

@@ -7,8 +7,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
 import HomePageRouter from './pages/HomePageRouter';
 import ProfilePage from './pages/UserPages/ProfileRoute';
-import AboutUs from './pages/AboutPages/AboutUs'; // Add this import
+import AboutUs from './pages/AboutPages/AboutUs'; 
 import HelpPage from './pages/HelpPages/HelpPage';
+import ContactPage from './pages/ContactPages/ContactPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/tentang" element={<AboutUs />} /> 
         <Route path="/bantuan" element={<HelpPage />} />
+        <Route path="/hubungi" element={<ContactPage />} />
 
         {/* Protected Routes (Require Login) */}
         <Route 

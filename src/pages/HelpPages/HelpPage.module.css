@@ -1,209 +1,106 @@
+/* src/pages/HelpPage/HelpPage.module.css */
+
 .helpPage {
   font-family: 'Lexend Deca', sans-serif;
   background-color: var(--bg-white);
 }
 
 /* --- Hero Section --- */
-.heroSection {
-display: flex;
-align-items: center;
-justify-content: center; /* Pusatkan konten */
-text-align: center; /* Pusatkan teks */
-gap: 2rem;
-padding: 4rem 2rem;
-background-color: var(--bg-light);
+/* .heroSection {
+  text-align: center;
+  padding: 5rem 2rem;
+  background-color: var(--bg-light);
+  border-bottom: 1px solid #e0e0e0;
 }
-
-.heroContent h1 {
-font-size: 2.30rem;
-font-weight: 700;
-color: var(--text-dark);
-margin-top: 0;
-margin-bottom: 1rem;
-}
-
-.heroContent p {
-flex: 1;
-font-size: 1.1rem;
-line-height: 1.7;
-color: var(--text-gray);
-max-width: 500px;
-margin: 0 auto;
-}
-
-.heroImage {
-flex: 0 0 400px;
-}
-
-.heroImage img {
-width: 100%;
-height: auto;
-}
-
-  @media (max-width: 992px) {
-  .heroImage {
-  display: none;
-  }
-}
+.heroSection h1 { font-size: 2.75rem; font-weight: 700; color: var(--text-dark); margin: 0 0 1rem; }
+.heroSection p { font-size: 1.1rem; color: var(--text-gray); max-width: 600px; margin: 0 auto; line-height: 1.7; } */
 
 /* --- Konten Utama --- */
 .mainContentWrapper {
-  padding: 4rem 2rem;
-}
-
-.mainContent {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem 2rem;
+}
+
+.backButton {
+  display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 2.5rem;
+  font-size: 0.9rem; font-weight: 500; color: var(--text-gray); text-decoration: none;
+}
+.backButton:hover { color: var(--text-dark); }
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.subheading {
+  font-size: 0.8rem; font-weight: 600; color: var(--primary-color);
+  letter-spacing: 1px; margin-bottom: 0.5rem; display: block;
+}
+.pageHeader h2 {
+  font-size: 2.5rem; font-weight: 700; color: var(--text-dark); margin: 0;
+}
+
+/* --- Layout Grid FAQ --- */
+.faqGrid {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Kolom kiri 2x lebih besar dari kanan */
-  gap: 3rem;
+  grid-template-columns: 1fr 1fr; /* Dua kolom sama besar */
+  gap: 3rem; /* Jarak antar kolom */
   align-items: start;
 }
 
-/* --- Kolom Kiri: FAQ List --- */
-.faqList {
-  /* Biarkan kosong, styling ada di bawah */
+.faqCategoryCard {
+  background-color: #FFF1E4;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
 }
 
-.faqCategory {
-  margin-bottom: 3rem;
-}
+/* .faqColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem; 
+} */
 
 .categoryTitle {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-dark);
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0; /* Sesuaikan margin */
   padding-bottom: 1rem;
   border-bottom: 1px solid #e9ecef;
 }
 
-/* --- Kolom Kanan: Formulir Kontak --- */
-.contactFormCard {
-  background-color: var(--bg-light);
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid #eee;
-  position: sticky;
-  top: 2rem;
-}
-
-.contactFormCard h3 {
-  font-size: 1.25rem;
-  margin: 0 0 0.5rem 0;
-  color: var(--text-dark);
-}
-.contactFormCard p {
-  font-size: 0.9rem;
-  color: var(--text-gray);
-  margin: 0 0 1.5rem 0;
-  line-height: 1.6;
-}
-.formGroup {
-  margin-bottom: 1rem;
-}
-.formGroup label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-.formGroup input,
-.formGroup textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  box-sizing: border-box; /* Penting */
-}
-.submitButton {
-  width: 100%;
-  padding: 0.85rem;
-  border: none;
-  border-radius: 6px;
-  background-color: var(--primary-color);
-  color: var(--bg-white);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-.submitButton:hover {
-  background-color: var(--primary-color-darker);
-}
-
-/* --- Accordion Styling Baru --- */
+/* --- Gaya Akordeon (tetap sama, sedikit penyesuaian) --- */
 .accordionItem {
   border-bottom: 1px solid #e9ecef;
 }
+.accordionItem:first-of-type {
+  border-top: 1px solid #e9ecef;
+}
 
 .accordionHeader {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 0.5rem; /* Beri sedikit padding horizontal */
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  font-family: 'Lexend Deca', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--text-dark);
-  transition: color 0.2s ease;
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: 1.25rem 0; background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Lexend Deca', sans-serif; font-size: 1rem; font-weight: 500;
+  color: var(--text-dark); transition: color 0.2s ease;
 }
-
-.accordionHeader:hover {
-  color: var(--primary-color);
-}
-
-/* Wrapper untuk animasi buka-tutup */
-.accordionCollapse {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-out;
-}
-
-.accordionCollapse.show {
-  max-height: 200px; /* Atur ketinggian maksimal yang cukup untuk konten */
-}
+.accordionHeader:hover { color: var(--primary-color); }
 
 .accordionContent {
-  padding: 0 0.5rem 1.5rem 0.5rem;
+  padding: 0 0.5rem 1.5rem 0;
 }
+.accordionContent p { margin: 0; line-height: 1.8; color: var(--text-gray); }
 
-.accordionContent p {
-  margin: 0;
-  line-height: 1.8;
-  color: var(--text-gray);
-}
-
-/* Ikon panah (v) */
 .accordionIcon {
-  width: 10px;
-  height: 10px;
-  border-right: 2px solid var(--text-gray);
-  border-bottom: 2px solid var(--text-gray);
-  transform: translateY(-2px) rotate(45deg);
-  transition: transform 0.3s ease, border-color 0.2s ease;
-  flex-shrink: 0;
+  width: 10px; height: 10px; border-right: 2px solid var(--text-gray); border-bottom: 2px solid var(--text-gray);
+  transform: translateY(-2px) rotate(45deg); transition: transform 0.3s ease, border-color 0.2s ease; flex-shrink: 0;
 }
-.accordionHeader:hover .accordionIcon {
-  border-color: var(--primary-color);
-}
-.accordionIcon.open {
-  transform: translateY(2px) rotate(225deg); /* Panah menghadap ke atas */
-}
+.accordionHeader:hover .accordionIcon { border-color: var(--primary-color); }
+.accordionIcon.open { transform: translateY(2px) rotate(225deg); }
 
 /* --- Responsive --- */
-@media (max-width: 992px) {
-  .mainContent {
-    grid-template-columns: 1fr; /* Tumpuk kolom di layar medium */
-  }
-  .contactFormCard {
-    position: static; /* Hentikan efek sticky */
+@media (max-width: 768px) {
+  .faqGrid {
+    grid-template-columns: 1fr; /* Tumpuk kolom di layar kecil */
   }
 }
