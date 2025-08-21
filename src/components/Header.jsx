@@ -46,7 +46,7 @@ const Header = () => {
         setDropdownVisible(false);
         navigate('/');
     };
-     console.log("DEBUG: Data user di Header:", user);
+    //  console.log("DEBUG: Data user di Header:", user);
     return (
         <header className={styles.mainHeader}>
             {/* BAGIAN LOGO ANDA YANG SEBELUMNYA HILANG, SEKARANG SUDAH KEMBALI */}

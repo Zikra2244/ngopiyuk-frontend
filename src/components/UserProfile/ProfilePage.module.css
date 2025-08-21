@@ -1,243 +1,253 @@
-/* Base Styles */
-.profilePage {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+/* Wadah utama halaman dengan background abu-abu */
+.profilePageContainer {
+  background-color: #f8f9fa;
+  padding: 3rem 2rem;
+  min-height: calc(100vh - 70px);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Konten utama yang terpusat */
+.profileContent {
   max-width: 800px;
   margin: 0 auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.divider {
-  border: none;
-  height: 1px;
-  background-color: #e0e0e0;
-  margin: 0.5rem 0;
-}
-
-/* Profile Header Styles */
-.profileHeader {
+/* --- KARTU 1: Header Profil --- */
+.profileHeaderCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   display: flex;
   gap: 2rem;
   align-items: center;
-  padding: 1.5rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
 }
-
 .avatarContainer {
   position: relative;
-  width: 120px;
-  height: 120px;
   flex-shrink: 0;
 }
-
 .profileAvatar {
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #f8f8f8;
+  border: 4px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
 .changeAvatarBtn {
   position: absolute;
-  bottom: -10px;
-  right: -10px;
-  background: #4a6bff;
+  bottom: 0px;
+  right: 0px;
+  background: var(--primary-color);
   color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 5px 10px;
-  font-size: 12px;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: transform 0.2s;
 }
-
 .changeAvatarBtn:hover {
-  background: #3a5bef;
+  transform: scale(1.1);
 }
-
 .profileInfo {
   flex: 1;
 }
-
 .username {
-  font-size: 1.8rem;
-  margin: 0 0 0.5rem 0;
-  color: #333;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
 }
-
+.userEmail {
+  font-size: 1rem;
+  color: #6c757d;
+  margin: 0.25rem 0 1rem 0;
+  font-family: 'Poppins', sans-serif;
+}
 .editUsernameBtn {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  cursor: pointer;
   background: none;
   border: none;
-  color: #4a6bff;
-  cursor: pointer;
-  font-size: 0.9rem;
   padding: 0;
-  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.5rem;
 }
-
 .editUsernameBtn:hover {
   text-decoration: underline;
 }
-
-.userEmail {
-  color: #666;
-  font-size: 1rem;
-  margin: 0;
-}
-
 .usernameEditForm {
-  display: flex;
-  gap: 0.5rem;
-  margin: 0.5rem 0;
-  align-items: center;
+  display: flex; gap: 0.5rem; align-items: center;
 }
-
 .usernameInput {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  flex: 1;
+  flex-grow: 1; padding: 0.5rem; border: 1px solid #ced4da; border-radius: 6px;
 }
-
 .saveBtn, .cancelBtn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
+  padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer;
 }
+.saveBtn { background-color: var(--primary-color); color: white; }
+.cancelBtn { background-color: #e9ecef; }
 
-.saveBtn {
-  background: #4a6bff;
-  color: white;
+/* --- BAGIAN ULASAN PENGGUNA (BARU) --- */
+.reviewSection {
+  margin-top: 2.5rem;
 }
-
-.saveBtn:hover {
-  background: #3a5bef;
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: var(--text-dark);
+  font-family: 'Poppins', sans-serif;
 }
-
-.cancelBtn {
-  background: #f0f0f0;
-  color: #333;
-}
-
-.cancelBtn:hover {
-  background: #e0e0e0;
-}
-
-.btnIcon {
-  margin-right: 4px;
-}
-
-/* Activity Stats Styles */
-.activityStats {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.activityStats h2 {
-  margin-top: 0;
-  color: #333;
-  font-size: 1.4rem;
-}
-
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.totalReviewsCard {
+  display: inline-flex;
+  align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
-}
-
-.statItem {
-  text-align: center;
-  padding: 1rem;
-  background: #f8f8f8;
-  border-radius: 8px;
-}
-
-.statNumber {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #4a6bff;
-  margin-bottom: 0.25rem;
-}
-
-.statLabel {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-/* Favorite Cafes Styles */
-.favoriteCafes {
-  background: #fff;
-  padding: 1.5rem;
+  background-color: var(--bg-white);
+  padding: 1.25rem 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  margin-bottom: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+.totalReviewsIcon {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  background-color: var(--bg-light);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+.totalReviewsNumber {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+}
+.totalReviewsLabel {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  font-family: 'Poppins', sans-serif;
 }
 
-.favoriteCafes h2 {
-  margin-top: 0;
-  color: #333;
-  font-size: 1.4rem;
+/* --- Navigasi Tab --- */
+.tabNav {
+  display: flex;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 2rem;
+  font-family: 'Poppins', sans-serif;
+}
+.tabButton {
+  padding: 0.75rem 0;
+  margin-right: 2rem;
+  margin-bottom: -1px; /* Agar border bawah menempel */
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-gray);
+  transition: all 0.2s ease;
+}
+.tabButton:hover {
+  color: var(--text-dark);
+}
+.tabButton.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
 }
 
-.cafesList {
-  margin-top: 1rem;
-}
-
-.cafeList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* --- Daftar Ulasan --- */
+.reviewsList {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+.reviewItem {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background-color: var(--bg-white);
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+.reviewIcon {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  background-color: #f0f2f5;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.cafeItem {
-  padding: 0.75rem 1rem;
-  background: #f8f8f8;
-  border-radius: 6px;
-  transition: background-color 0.2s;
+.reviewTitle {
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin: 0.5rem 0 0.75rem 0; /* Beri sedikit jarak bawah */
+  font-style: italic;
 }
 
-.cafeItem:hover {
-  background-color: #eee;
+/* Gaya baru untuk deskripsi */
+.reviewDescription {
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--border-light);
 }
 
+.reviewDetails {
+  flex-grow: 1;
+}
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.reviewCafeName {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.reviewDate {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+.reviewTitle {
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
+}
 .emptyState {
-  color: #999;
+  color: #6c757d;
   text-align: center;
-  padding: 2rem 0;
+  padding: 3rem 0;
+  background-color: var(--bg-white);
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-  .profileHeader {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profileInfo {
-    text-align: center;
-  }
-
-  .usernameEditForm {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.loadingContainer {
+  text-align: center;
+  padding: 5rem;
 }
