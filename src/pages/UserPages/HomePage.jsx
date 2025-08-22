@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import styles from "./HomePage.module.css";
+import myLocationIconUrl from "../../assets/LokasiSaya.png";
 
 // Impor komponen pendukung
 import Header from "../../components/Header";
@@ -20,6 +21,54 @@ function ResizeMap() {
   return null;
 }
 
+function LocateControl() {
+  const map = useMap();
+  const [position, setPosition] = useState(null);
+  const markerRef = useRef(null);
+
+  // Definisikan ikon kustom Anda di sini
+  const myLocationIcon = L.divIcon({
+    className: "my-location-icon", // Class ini bisa dikosongkan jika tidak perlu style khusus
+    html: `<div class="${styles.pulsatingDot}"></div>`,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+    popupAnchor: [0, -15],
+  });
+
+  const handleLocateClick = () => {
+    map.locate({ watch: true }).on("locationfound", function (e) {
+      setPosition(e.latlng); // Set posisi untuk me-render marker
+      map.flyTo(e.latlng, 16);
+    });
+  };
+
+  // Efek untuk membuka popup setelah marker di-render
+  useEffect(() => {
+    if (markerRef.current) {
+      markerRef.current.openPopup();
+    }
+  }, [position]);
+
+  return (
+    <>
+      <div className={styles.locateControlContainer}>
+        <button onClick={handleLocateClick} className={styles.locateButton}>
+          <img src={myLocationIconUrl} alt="Lacak Lokasi" />
+        </button>
+      </div>
+      <div>
+        {/* Render Marker jika posisi sudah ditemukan */}
+        {position && (
+          <Marker position={position} icon={myLocationIcon} ref={markerRef}>
+            <Popup>
+              <div className={styles.locationPopup}>📍 Anda di sini</div>
+            </Popup>
+          </Marker>
+        )}
+      </div>
+    </>
+  );
+}
 // Komponen helper untuk memindahkan peta secara dinamis
 function MapFlyTo({ position }) {
   const map = useMap();
@@ -267,6 +316,7 @@ const UserHomePage = () => {
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap &copy; CARTO"
             />
+            <LocateControl />
             <ResizeMap />
             <MapFlyTo position={flyToPosition} />
             {cafes.map((cafe) => (

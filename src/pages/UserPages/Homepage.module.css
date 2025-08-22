@@ -1,16 +1,16 @@
 .homePageWrapper {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   height: 100vh;
   background-color: #f0f2f5;
 }
 
 .mainContent {
   display: flex;
-  flex-grow: 1; 
+  flex-grow: 1;
   padding: 1.5rem;
   gap: 1.5rem;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .sidebar {
@@ -19,16 +19,16 @@
   background-color: var(--bg-white);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   overflow-y: auto;
 }
 
 .sidebar h3 {
   font-size: 1.1rem;
-  font-weight: 600; 
+  font-weight: 600;
   color: var(--text-dark);
-  margin: 0 0 1.5rem 0; 
-  padding-bottom: 0.75rem; 
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -80,8 +80,8 @@
   flex-direction: column;
   background-color: var(--bg-white);
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  overflow: hidden; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 .mapHeader {
@@ -139,7 +139,7 @@
   width: 280px;
   border-radius: 12px;
   overflow: hidden;
-  font-family: system-ui, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .popupImage {
@@ -197,21 +197,39 @@
   background-color: var(--primary-color-darker);
 }
 
-:global(.leaflet-popup-content-wrapper) {
-  padding: 0;
+.leaflet-popup-content-wrapper {
   border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 15px !important;
+}
+.my-location-popup .leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  padding: 0;
+}
+
+/* Menghilangkan panah HANYA untuk popup lokasi pengguna */
+.my-location-popup .leaflet-popup-tip {
+  display: none;
+}
+:global(.leaflet-popup-close-button) {
+  display: none !important;
 }
 
 :global(.leaflet-popup-tip) {
   display: none;
 }
 
-
 .searchContainer {
-  flex-grow: 1; 
-  display: flex; 
+  flex-grow: 1;
+  display: flex;
   justify-content: center;
-  position: relative; 
+  position: relative;
 }
 
 .searchBar {
@@ -229,7 +247,7 @@
   padding: 0;
   margin: 0;
   position: absolute;
-  top: 100%; 
+  top: 100%;
   left: 0;
   right: 0;
   background-color: #fff;
@@ -238,7 +256,7 @@
   border-radius: 0 0 8px 8px;
   max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 2000;
 }
 
@@ -269,7 +287,7 @@
   transition: all 0.2s ease;
 }
 .sidebarToggle button.active {
-  background-color: var(--primary-color, #8D5B4C);
+  background-color: var(--primary-color, #8d5b4c);
   color: white;
 }
 
@@ -281,7 +299,8 @@
   margin-top: 10px;
 }
 
-.favoriteBtn, .favoritedBtn {
+.favoriteBtn,
+.favoritedBtn {
   padding: 0.6rem;
   border: none;
   border-radius: 6px;
@@ -306,7 +325,76 @@
   color: #dc3545;
 }
 .detailsBtn {
-  background-color: var(--primary-color, #8D5B4C);
+  background-color: var(--primary-color, #8d5b4c);
   color: white;
   flex-grow: 1;
+}
+
+.locateButton:hover {
+  background-color: #4cae4c; /* Hijau lebih gelap saat hover */
+}
+
+.locateButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 174, 76, 0.5); /* Efek fokus */
+}
+
+.pulsatingDot {
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 rgba(0, 123, 255, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+.locationPopup {
+  font-weight: 600;
+  text-align: center;
+}
+
+.locateControlContainer {
+  position: absolute;
+  top: 70px;
+  left: 12px;
+  z-index: 1000;
+}
+
+.locateButton {
+  width: 30px; /* Samakan dengan lebar tombol zoom */
+  height: 30px; /* Samakan dengan tinggi tombol zoom */
+  background-color: #6d4c41;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-top: 10px; /* Posisikan di bawah tombol zoom out */
+}
+
+.locateButton:hover {
+  background-color: #4e342e;
+}
+
+.locateButton img {
+  width: 25px; /* Ukuran ikon di dalam tombol */
+  height: 25px;
 }
