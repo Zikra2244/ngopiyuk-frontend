@@ -1,16 +1,19 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import styles from './HomePage.module.css';
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import styles from "./HomePage.module.css";
+import api, { API_URL } from "@/services/api";
 
-import Header from '../../components/Header';
-import MapClickHandler from '../../components/MapClickHandler';
-import AddCafeModal from '../../components/AddCafeModal';
-import AdminReviewModal from '../../components/AdminReviewModal';
-import EditCafeModal from '../../components/EditCafeModal';
-import { Rating } from 'react-simple-star-rating';
+import Header from "../../components/Header";
+import MapClickHandler from "../../components/MapClickHandler";
+import AddCafeModal from "../../components/AddCafeModal";
+import AdminReviewModal from "../../components/AdminReviewModal";
+import EditCafeModal from "../../components/EditCafeModal";
+import { Rating } from "react-simple-star-rating";
+import { getImageUrl } from "@/utils/imageUrl";
+
 function ResizeMap() {
   const map = useMap();
   useEffect(() => {
@@ -38,26 +41,27 @@ const AdminHomePage = () => {
   const [isAddingMode, setIsAddingMode] = useState(false);
   const [newCafeLocation, setNewCafeLocation] = useState(null);
   const [selectedCafe, setSelectedCafe] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredCafes, setFilteredCafes] = useState([]);
   const [flyToPosition, setFlyToPosition] = useState(null);
   const markerRefs = useMemo(() => ({}), []);
   const [editingCafe, setEditingCafe] = useState(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
       try {
         setUser(jwtDecode(storedToken));
       } catch (error) {
         console.error("Token tidak valid:", error);
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
       }
     }
-    axios.get('http://localhost:5000/api/cafes')
-      .then(response => setCafes(response.data))
-      .catch(error => console.error('Gagal mengambil data kafe!', error));
+    api
+      .get("/cafes")
+      .then((response) => setCafes(response.data))
+      .catch((error) => console.error("Gagal mengambil data kafe!", error));
   }, []);
 
   const handleMapClick = (latlng) => {
@@ -65,28 +69,28 @@ const AdminHomePage = () => {
   };
 
   const handleCafeAdded = (newCafe) => {
-    setCafes(prevCafes => [...prevCafes, newCafe]);
+    setCafes((prevCafes) => [...prevCafes, newCafe]);
     setNewCafeLocation(null);
     setIsAddingMode(false);
   };
 
   const handleCafeUpdated = (updatedCafe) => {
-    setCafes(prevCafes =>
-      prevCafes.map(c => (c.id === updatedCafe.id ? updatedCafe : c))
+    setCafes((prevCafes) =>
+      prevCafes.map((c) => (c.id === updatedCafe.id ? updatedCafe : c))
     );
   };
 
   const handleDeleteCafe = async (cafeId) => {
-    if (window.confirm('Apakah Anda yakin ingin menghapus kafe ini?')) {
+    if (window.confirm("Apakah Anda yakin ingin menghapus kafe ini?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/cafes/${cafeId}`, {
-          headers: { Authorization: 'Bearer ' + token }
+        await api.delete(`/cafes/${cafeId}`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
-        setCafes(prevCafes => prevCafes.filter(c => c.id !== cafeId));
-        alert('Kafe berhasil dihapus!');
+        setCafes((prevCafes) => prevCafes.filter((c) => c.id !== cafeId));
+        alert("Kafe berhasil dihapus!");
       } catch (error) {
-        console.error('Gagal menghapus kafe:', error);
-        alert('Gagal menghapus kafe karena kesalahan.');
+        console.error("Gagal menghapus kafe:", error);
+        alert("Gagal menghapus kafe karena kesalahan.");
       }
     }
   };
@@ -95,7 +99,7 @@ const AdminHomePage = () => {
     const query = event.target.value;
     setSearchTerm(query);
     if (query) {
-      const results = cafes.filter(cafe =>
+      const results = cafes.filter((cafe) =>
         cafe.name.toLowerCase().startsWith(query.toLowerCase())
       );
       setFilteredCafes(results);
@@ -112,7 +116,7 @@ const AdminHomePage = () => {
         marker.openPopup();
       }
     }, 1600);
-    setSearchTerm('');
+    setSearchTerm("");
     setFilteredCafes([]);
   };
 
@@ -128,18 +132,33 @@ const AdminHomePage = () => {
           <h3>Admin Dashboard</h3>
           <p>Selamat datang, {user && user.username}!</p>
           <div className={styles.adminActions}>
-            <button className={styles.addLocationBtn} onClick={() => setIsAddingMode(!isAddingMode)}>
-              {isAddingMode ? '❌ Batal Menambah' : '📍 Tambah Kafe Baru'}
+            <button
+              className={styles.addLocationBtn}
+              onClick={() => setIsAddingMode(!isAddingMode)}
+            >
+              {isAddingMode ? "❌ Batal Menambah" : "📍 Tambah Kafe Baru"}
             </button>
-            {isAddingMode && <p className={styles.instructionText}>Klik di peta untuk menandai lokasi...</p>}
+            {isAddingMode && (
+              <p className={styles.instructionText}>
+                Klik di peta untuk menandai lokasi...
+              </p>
+            )}
           </div>
         </aside>
         <div className={styles.mapArea}>
           {newCafeLocation && (
-            <AddCafeModal location={newCafeLocation} onClose={() => setNewCafeLocation(null)} onCafeAdded={handleCafeAdded} token={token} />
+            <AddCafeModal
+              location={newCafeLocation}
+              onClose={() => setNewCafeLocation(null)}
+              onCafeAdded={handleCafeAdded}
+              token={token}
+            />
           )}
           {selectedCafe && (
-            <AdminReviewModal cafe={selectedCafe} onClose={() => setSelectedCafe(null)} />
+            <AdminReviewModal
+              cafe={selectedCafe}
+              onClose={() => setSelectedCafe(null)}
+            />
           )}
           {editingCafe && (
             <EditCafeModal
@@ -150,17 +169,27 @@ const AdminHomePage = () => {
             />
           )}
           <div className={styles.mapHeader}>
-            <div className={styles.logo}>
-            </div>
+            <div className={styles.logo}></div>
             <div className={styles.searchContainer}>
               <div className={styles.searchBar}>
-                <input type="text" placeholder="Cari kafe yang sudah ada" value={searchTerm} onChange={handleSearchChange} />
-                <button><i className="fas fa-search"></i></button>
+                <input
+                  type="text"
+                  placeholder="Cari kafe yang sudah ada"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <button>
+                  <i className="fas fa-search"></i>
+                </button>
               </div>
               {filteredCafes.length > 0 && (
                 <ul className={styles.searchResults}>
-                  {filteredCafes.map(cafe => (
-                    <li key={cafe.id} className={styles.searchResultItem} onClick={() => handleResultClick(cafe)}>
+                  {filteredCafes.map((cafe) => (
+                    <li
+                      key={cafe.id}
+                      className={styles.searchResultItem}
+                      onClick={() => handleResultClick(cafe)}
+                    >
                       {cafe.name}
                     </li>
                   ))}
@@ -168,19 +197,30 @@ const AdminHomePage = () => {
               )}
             </div>
           </div>
-          <MapContainer center={position} zoom={13} className={styles.mapContainer}>
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution='&copy; OpenStreetMap &copy; CARTO' />
+          <MapContainer
+            center={position}
+            zoom={13}
+            className={styles.mapContainer}
+          >
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              attribution="&copy; OpenStreetMap &copy; CARTO"
+            />
             <ResizeMap />
             <MapClickHandler onMapClick={handleMapClick} />
             <MapFlyTo position={flyToPosition} />
-            {cafes.map(cafe => (
-              <Marker key={cafe.id} position={[cafe.latitude, cafe.longitude]} ref={(el) => (markerRefs[cafe.id] = el)}>
+            {cafes.map((cafe) => (
+              <Marker
+                key={cafe.id}
+                position={[cafe.latitude, cafe.longitude]}
+                ref={(el) => (markerRefs[cafe.id] = el)}
+              >
                 <Popup>
                   <div className={styles.popupCard}>
                     {cafe.photoUrl && (
                       <img
                         className={styles.popupImage}
-                        src={`http://localhost:5000/${cafe.photoUrl}`}
+                        src={getImageUrl(cafe.photoUrl, cafe.id)}
                         alt={cafe.name}
                       />
                     )}
@@ -200,21 +240,34 @@ const AdminHomePage = () => {
                             <span>({cafe.reviewCount})</span>
                           </>
                         ) : (
-                          <span className={styles.noReviews}>Belum ada ulasan</span>
+                          <span className={styles.noReviews}>
+                            Belum ada ulasan
+                          </span>
                         )}
                       </div>
                       <p>{cafe.address}</p>
                       {user && cafe.userId === user.id && (
                         <div className={styles.popupActions}>
-                          <button className={`${styles.popupBtn} ${styles.editBtn}`} onClick={() => setEditingCafe(cafe)}>
+                          <button
+                            className={`${styles.popupBtn} ${styles.editBtn}`}
+                            onClick={() => setEditingCafe(cafe)}
+                          >
                             Edit
                           </button>
-                          <button className={`${styles.popupBtn} ${styles.deleteBtn}`} onClick={() => handleDeleteCafe(cafe.id)}>
+                          <button
+                            className={`${styles.popupBtn} ${styles.deleteBtn}`}
+                            onClick={() => handleDeleteCafe(cafe.id)}
+                          >
                             Hapus
                           </button>
                         </div>
                       )}
-                      <button className={styles.popupBtnFull} onClick={() => setSelectedCafe(cafe)}>Lihat Ulasan</button>
+                      <button
+                        className={styles.popupBtnFull}
+                        onClick={() => setSelectedCafe(cafe)}
+                      >
+                        Lihat Ulasan
+                      </button>
                     </div>
                   </div>
                 </Popup>

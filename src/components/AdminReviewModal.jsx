@@ -1,9 +1,11 @@
 // frontend/src/components/AdminReviewModal.jsx
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Rating } from 'react-simple-star-rating';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Rating } from "react-simple-star-rating";
 // Kita gunakan CSS yang sama dengan modal detail user agar tampilannya konsisten
-import styles from './CafeDetailModal.module.css'; 
+import styles from "./CafeDetailModal.module.css";
+import api, { API_URL } from "@/services/api";
+import { getImageUrl } from "@/utils/imageUrl";
 
 const AdminReviewModal = ({ cafe, onClose }) => {
   const [reviews, setReviews] = useState([]);
@@ -11,10 +13,10 @@ const AdminReviewModal = ({ cafe, onClose }) => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === "Escape") onClose();
     };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const AdminReviewModal = ({ cafe, onClose }) => {
     const fetchReviews = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/cafes/${cafe.id}/reviews`);
+        const response = await api.get(`/cafes/${cafe.id}/reviews`);
         setReviews(response.data);
       } catch (error) {
         console.error("Gagal mengambil ulasan:", error);
@@ -38,7 +40,9 @@ const AdminReviewModal = ({ cafe, onClose }) => {
   return (
     <div className={styles.modalBackdrop} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={onClose}>×</button>
+        <button className={styles.closeButton} onClick={onClose}>
+          ×
+        </button>
 
         <h2>{cafe.name}</h2>
         <p className={styles.address}>{cafe.address}</p>
@@ -46,22 +50,41 @@ const AdminReviewModal = ({ cafe, onClose }) => {
 
         <div className={styles.reviewsSection}>
           <h3>Ulasan Pengguna</h3>
-          {isLoading ? <p>Memuat ulasan...</p> : (
-            reviews.length > 0 ? (
-              <ul className={styles.reviewList}>
-                {reviews.map(review => (
-                  <li key={review.id} className={styles.reviewItem}>
-                    <div className={styles.reviewHeader}>
-                      <strong>{review.title}</strong>
-                      <Rating initialValue={review.rating} readonly size={20} fillColor="#FFC107" />
-                    </div>
-                    {review.photoUrl && <img src={`http://localhost:5000/${review.photoUrl}`} alt={review.title} className={styles.reviewImage} />}
-                    <p>{review.description}</p>
-                    <small>oleh: {review.User ? review.User.username : 'Anonim'}</small>
-                  </li>
-                ))}
-              </ul>
-            ) : <p>Belum ada ulasan untuk tempat ini.</p>
+          {isLoading ? (
+            <p>Memuat ulasan...</p>
+          ) : reviews.length > 0 ? (
+            <ul className={styles.reviewList}>
+              {reviews.map((review) => (
+                <li key={review.id} className={styles.reviewItem}>
+                  <div className={styles.reviewHeader}>
+                    <strong>{review.title}</strong>
+                    <Rating
+                      initialValue={review.rating}
+                      readonly
+                      size={20}
+                      fillColor="#FFC107"
+                    />
+                  </div>
+                  {review.photoUrl && (
+                    <img
+                      src={getImageUrl(review.photoUrl, review.id)}
+                      alt={review.title}
+                      className={styles.reviewImage}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = getImageUrl(null, review.id);
+                      }}
+                    />
+                  )}
+                  <p>{review.description}</p>
+                  <small>
+                    oleh: {review.User ? review.User.username : "Anonim"}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Belum ada ulasan untuk tempat ini.</p>
           )}
         </div>
       </div>

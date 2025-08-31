@@ -3,13 +3,14 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import styles from "./HomePage.module.css";
+import styles from "./Homepage.module.css";
 import myLocationIconUrl from "../../assets/LokasiSaya.png";
-
+import api, { API_URL } from "@/services/api";
 // Impor komponen pendukung
 import Header from "../../components/Header";
 import CafeDetailModal from "../../components/CafeDetailModal";
 import { Rating } from "react-simple-star-rating";
+import { getImageUrl } from "@/utils/imageUrl";
 
 // Komponen helper untuk mengatur ulang ukuran peta saat sidebar/konten berubah
 function ResizeMap() {
@@ -82,6 +83,7 @@ function MapFlyTo({ position }) {
 
 const UserHomePage = () => {
   // === STATE MANAGEMENT ===
+  const BASE_URL = "http://localhost:5000/";
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [cafes, setCafes] = useState([]);
@@ -101,9 +103,7 @@ const UserHomePage = () => {
   const fetchProfileData = async (authToken) => {
     if (!authToken) return;
     try {
-      const response = await axios.get("http://localhost:5000/api/favorites", {
-        headers: { Authorization: "Bearer " + authToken },
-      });
+      const response = await api.get("/favorites");
 
       console.log("Favorites data:", response.data);
 
@@ -129,10 +129,21 @@ const UserHomePage = () => {
         localStorage.removeItem("token");
       }
     }
-    axios
-      .get("http://localhost:5000/api/cafes")
-      .then((response) => setCafes(response.data))
-      .catch((error) => console.error("Gagal mengambil data kafe!", error));
+    api
+      .get("/cafes") // ga perlu `${API_URL}`
+      .then((response) => {
+        // Validasi bahwa response.data adalah array
+        if (Array.isArray(response.data)) {
+          setCafes(response.data);
+        } else {
+          console.error("API response bukan array:", response.data);
+          setCafes([]); // Fallback ke empty array
+        }
+      })
+      .catch((error) => {
+        console.error("Gagal mengambil data kafe!", error);
+        setCafes([]); // ❗️INI YANG MISSING - set ke empty array pada error
+      });
   }, []);
 
   // === HANDLER FUNCTIONS ===
@@ -170,10 +181,10 @@ const UserHomePage = () => {
 
   const handleAddFavorite = async (cafeId) => {
     try {
-      await axios.post(
-        "http://localhost:5000/api/favorites", // ✅ pakai route dari favoriteRoutes.js
+      await api.post(
+        "/favorites",
         { cafeId },
-        { headers: { Authorization: "Bearer " + token } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchProfileData(token);
     } catch (error) {
@@ -183,10 +194,9 @@ const UserHomePage = () => {
 
   const handleRemoveFavorite = async (cafeId) => {
     try {
-      await axios.delete(
-        `http://localhost:5000/api/favorites/${cafeId}`, // ✅ pakai route dari favoriteRoutes.js
-        { headers: { Authorization: "Bearer " + token } }
-      );
+      await api.delete(`/favorites/${cafeId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       fetchProfileData(token);
     } catch (error) {
@@ -221,18 +231,14 @@ const UserHomePage = () => {
 
           <ul>
             {sidebarView === "featured" &&
-              cafes.slice(0, 7).map((cafe) => (
+              (Array.isArray(cafes) ? cafes.slice(0, 7) : []).map((cafe) => (
                 <li
                   key={cafe.id}
                   className={styles.cafeItem}
                   onClick={() => handleResultClick(cafe)}
                 >
                   <img
-                    src={
-                      cafe.photoUrl
-                        ? `http://localhost:5000/${cafe.photoUrl}`
-                        : `https://i.pravatar.cc/40?u=${cafe.id}`
-                    }
+                    src={getImageUrl(cafe.photoUrl, cafe.id)}
                     alt={cafe.name}
                   />
                   <div className={styles.cafeInfo}>
@@ -251,11 +257,7 @@ const UserHomePage = () => {
                     onClick={() => handleResultClick(cafe)}
                   >
                     <img
-                      src={
-                        cafe.photoUrl
-                          ? `http://localhost:5000/${cafe.photoUrl}`
-                          : `https://i.pravatar.cc/40?u=${cafe.id}`
-                      }
+                      src={getImageUrl(cafe.photoUrl, cafe.id)}
                       alt={cafe.name}
                     />
                     <div className={styles.cafeInfo}>
@@ -330,7 +332,7 @@ const UserHomePage = () => {
                     {cafe.photoUrl && (
                       <img
                         className={styles.popupImage}
-                        src={`http://localhost:5000/${cafe.photoUrl}`}
+                        src={getImageUrl(cafe.photoUrl, cafe.id)}
                         alt={cafe.name}
                       />
                     )}

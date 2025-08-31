@@ -1,30 +1,31 @@
 // frontend/src/pages/RegisterPage.jsx
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
-import './RegisterPage.css'; // CSS baru untuk styling ala landing page
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import "./RegisterPage.css"; // CSS baru untuk styling ala landing page
+import api, { API_URL } from "@/services/api";
 
 const RegisterPage = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('user');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', {
+      await api.post("/auth/register", {
         username,
         email,
         password,
         role,
       });
-      alert('Registrasi berhasil! Silakan login.');
-      navigate('/login');
+      alert("Registrasi berhasil! Silakan login.");
+      navigate("/login");
     } catch (error) {
-      console.error('Gagal register:', error);
-      alert('Registrasi gagal! Email mungkin sudah digunakan.');
+      console.error("Gagal register:", error);
+      alert("Registrasi gagal! Email mungkin sudah digunakan.");
     }
   };
 
@@ -68,10 +69,7 @@ const RegisterPage = () => {
           </div>
           <div className="form-group">
             <label>Daftar sebagai</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="user">User</option>
               <option value="admin">Admin (Pemilik Kafe)</option>
             </select>

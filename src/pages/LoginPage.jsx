@@ -1,15 +1,15 @@
 // frontend/src/pages/LoginPage.jsx
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
-import './LoginPage.css';
-
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import "./LoginPage.css";
+import api, { API_URL } from "@/services/api";
 
 const LoginPage = () => {
   // State untuk menampung input email dan password
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   // Hook untuk melakukan navigasi/redirect setelah login
   const navigate = useNavigate();
 
@@ -19,24 +19,18 @@ const LoginPage = () => {
 
     try {
       // Kirim request POST ke endpoint login di backend
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
-
-      // Jika berhasil, backend akan mengirimkan token
+      const response = await api.post("/auth/login", { email, password });
       const { token } = response.data;
 
       // 1. Simpan token ke localStorage browser
       // Ini membuat pengguna tetap login bahkan setelah me-refresh halaman
-      localStorage.setItem('token', token);
-      
-      // 2. Arahkan pengguna ke halaman utama
-      navigate('/home');
+      localStorage.setItem("token", token);
 
+      // 2. Arahkan pengguna ke halaman utama
+      navigate("/home");
     } catch (error) {
-      console.error('Login gagal:', error);
-      alert('Login gagal! Periksa kembali email dan password Anda.');
+      console.error("Login gagal:", error);
+      alert("Login gagal! Periksa kembali email dan password Anda.");
     }
   };
 
@@ -65,7 +59,9 @@ const LoginPage = () => {
               required
             />
           </div>
-          <button type="submit" className="auth-button">Login</button>
+          <button type="submit" className="auth-button">
+            Login
+          </button>
         </form>
         <p className="auth-link">
           Belum punya akun? <Link to="/register">Register di sini</Link>
