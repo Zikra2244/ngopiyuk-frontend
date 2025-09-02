@@ -235,29 +235,47 @@ const UserHomePage = () => {
 
   // === RENDER COMPONENT ===
   return (
-    <>
-      <div className={styles.homePageWrapper}>
-        <Header />
-        <div className={styles.mainContent}>
-          <aside className={styles.sidebar}>
-            <div className={styles.sidebarToggle}>
-              <button
-                className={sidebarView === "featured" ? styles.active : ""}
-                onClick={() => setSidebarView("featured")}
-              >
-                Featured
-              </button>
-              <button
-                className={sidebarView === "favorites" ? styles.active : ""}
-                onClick={() => setSidebarView("favorites")}
-              >
-                Favorites
-              </button>
-            </div>
+    <div className={styles.homePageWrapper}>
+      <Header />
+      <div className={styles.mainContent}>
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarToggle}>
+            <button
+              className={sidebarView === "featured" ? styles.active : ""}
+              onClick={() => setSidebarView("featured")}
+            >
+              Featured
+            </button>
+            <button
+              className={sidebarView === "favorites" ? styles.active : ""}
+              onClick={() => setSidebarView("favorites")}
+            >
+              Favorites
+            </button>
+          </div>
 
-            <ul>
-              {sidebarView === "featured" &&
-                (Array.isArray(cafes) ? cafes.slice(0, 7) : []).map((cafe) => (
+          <ul>
+            {sidebarView === "featured" &&
+              (Array.isArray(cafes) ? cafes.slice(0, 7) : []).map((cafe) => (
+                <li
+                  key={cafe.id}
+                  className={styles.cafeItem}
+                  onClick={() => handleResultClick(cafe)}
+                >
+                  <img
+                    src={getImageUrl(cafe.photoUrl, cafe.id)}
+                    alt={cafe.name}
+                  />
+                  <div className={styles.cafeInfo}>
+                    <h4>{cafe.name}</h4>
+                    <p>{cafe.address.substring(0, 25)}...</p>
+                  </div>
+                </li>
+              ))}
+
+            {sidebarView === "favorites" &&
+              (favoriteCafes.length > 0 ? (
+                favoriteCafes.map((cafe) => (
                   <li
                     key={cafe.id}
                     className={styles.cafeItem}
@@ -272,164 +290,142 @@ const UserHomePage = () => {
                       <p>{cafe.address.substring(0, 25)}...</p>
                     </div>
                   </li>
-                ))}
+                ))
+              ) : (
+                <li className={styles.cafeItem}>
+                  <div className={styles.cafeInfo}>
+                    <p>No favorites yet.</p>
+                  </div>
+                </li>
+              ))}
+          </ul>
+        </aside>
 
-              {sidebarView === "favorites" &&
-                (favoriteCafes.length > 0 ? (
-                  favoriteCafes.map((cafe) => (
+        <div className={styles.mapArea}>
+          <div className={styles.mapHeader}>
+            <div className={styles.logo}>
+              <i className="fas fa-mug-hot"></i> NgopiYuk
+            </div>
+            <div className={styles.searchContainer}>
+              <div className={styles.searchBar}>
+                <input
+                  type="text"
+                  placeholder="Cari tempat ngopi..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <button>
+                  <i className="fas fa-search"></i>
+                </button>
+              </div>
+              {filteredCafes.length > 0 && (
+                <ul className={styles.searchResults}>
+                  {filteredCafes.map((cafe) => (
                     <li
                       key={cafe.id}
-                      className={styles.cafeItem}
+                      className={styles.searchResultItem}
                       onClick={() => handleResultClick(cafe)}
                     >
+                      {cafe.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+
+          <MapContainer
+            center={position}
+            zoom={13}
+            className={styles.mapContainer}
+          >
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              attribution="&copy; OpenStreetMap &copy; CARTO"
+            />
+            <LocateControl />
+            <ResizeMap />
+            <MapFlyTo position={flyToPosition} />
+            {cafes.map((cafe) => (
+              <Marker
+                key={cafe.id}
+                position={[cafe.latitude, cafe.longitude]}
+                ref={(el) => (markerRefs[cafe.id] = el)}
+              >
+                <Popup>
+                  <div className={styles.popupCard}>
+                    {cafe.photoUrl && (
                       <img
+                        className={styles.popupImage}
                         src={getImageUrl(cafe.photoUrl, cafe.id)}
                         alt={cafe.name}
                       />
-                      <div className={styles.cafeInfo}>
-                        <h4>{cafe.name}</h4>
-                        <p>{cafe.address.substring(0, 25)}...</p>
+                    )}
+                    <div className={styles.popupContent}>
+                      <h4>{cafe.name}</h4>
+                      <div className={styles.popupRating}>
+                        {cafe.reviewCount > 0 ? (
+                          <>
+                            <span>{parseFloat(cafe.avgRating).toFixed(1)}</span>
+                            <Rating
+                              initialValue={parseFloat(cafe.avgRating)}
+                              readonly
+                              size={20}
+                              fillColor="#FFC107"
+                              allowFraction
+                            />
+                            <span>({cafe.reviewCount})</span>
+                          </>
+                        ) : (
+                          <span className={styles.noReviews}>
+                            Belum ada ulasan
+                          </span>
+                        )}
                       </div>
-                    </li>
-                  ))
-                ) : (
-                  <li className={styles.cafeItem}>
-                    <div className={styles.cafeInfo}>
-                      <p>No favorites yet.</p>
-                    </div>
-                  </li>
-                ))}
-            </ul>
-          </aside>
-
-          <div className={styles.mapArea}>
-            <div className={styles.mapHeader}>
-              <div className={styles.logo}>
-                <i className="fas fa-mug-hot"></i> NgopiYuk
-              </div>
-              <div className={styles.searchContainer}>
-                <div className={styles.searchBar}>
-                  <input
-                    type="text"
-                    placeholder="Cari tempat ngopi..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                  />
-                  <button>
-                    <i className="fas fa-search"></i>
-                  </button>
-                </div>
-                {filteredCafes.length > 0 && (
-                  <ul className={styles.searchResults}>
-                    {filteredCafes.map((cafe) => (
-                      <li
-                        key={cafe.id}
-                        className={styles.searchResultItem}
-                        onClick={() => handleResultClick(cafe)}
-                      >
-                        {cafe.name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-
-            <MapContainer
-              center={position}
-              zoom={13}
-              className={styles.mapContainer}
-            >
-              <TileLayer
-                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-                attribution="&copy; OpenStreetMap &copy; CARTO"
-              />
-              <LocateControl />
-              <ResizeMap />
-              <MapFlyTo position={flyToPosition} />
-              {cafes.map((cafe) => (
-                <Marker
-                  key={cafe.id}
-                  position={[cafe.latitude, cafe.longitude]}
-                  ref={(el) => (markerRefs[cafe.id] = el)}
-                >
-                  <Popup>
-                    <div className={styles.popupCard}>
-                      {cafe.photoUrl && (
-                        <img
-                          className={styles.popupImage}
-                          src={getImageUrl(cafe.photoUrl, cafe.id)}
-                          alt={cafe.name}
-                        />
-                      )}
-                      <div className={styles.popupContent}>
-                        <h4>{cafe.name}</h4>
-                        <div className={styles.popupRating}>
-                          {cafe.reviewCount > 0 ? (
-                            <>
-                              <span>
-                                {parseFloat(cafe.avgRating).toFixed(1)}
-                              </span>
-                              <Rating
-                                initialValue={parseFloat(cafe.avgRating)}
-                                readonly
-                                size={20}
-                                fillColor="#FFC107"
-                                allowFraction
-                              />
-                              <span>({cafe.reviewCount})</span>
-                            </>
-                          ) : (
-                            <span className={styles.noReviews}>
-                              Belum ada ulasan
-                            </span>
-                          )}
-                        </div>
-                        <p>{cafe.address}</p>
-                        <div className={styles.popupActions}>
-                          {favoriteIds.has(cafe.id) ? (
-                            <button
-                              className={styles.favoritedBtn}
-                              title="Remove from Favorites"
-                              onClick={() => handleRemoveFavorite(cafe.id)}
-                            >
-                              ❤️
-                            </button>
-                          ) : (
-                            <button
-                              className={styles.favoriteBtn}
-                              title="Add to Favorites"
-                              onClick={() => handleAddFavorite(cafe.id)}
-                            >
-                              ♡
-                            </button>
-                          )}
+                      <p>{cafe.address}</p>
+                      <div className={styles.popupActions}>
+                        {favoriteIds.has(cafe.id) ? (
                           <button
-                            className={styles.detailsBtn}
-                            onClick={() => setSelectedCafe(cafe)}
+                            className={styles.favoritedBtn}
+                            title="Remove from Favorites"
+                            onClick={() => handleRemoveFavorite(cafe.id)}
                           >
-                            Lihat Ulasan
+                            ❤️
                           </button>
-                        </div>
+                        ) : (
+                          <button
+                            className={styles.favoriteBtn}
+                            title="Add to Favorites"
+                            onClick={() => handleAddFavorite(cafe.id)}
+                          >
+                            ♡
+                          </button>
+                        )}
+                        <button
+                          className={styles.detailsBtn}
+                          onClick={() => setSelectedCafe(cafe)}
+                        >
+                          Lihat Ulasan
+                        </button>
                       </div>
                     </div>
-                  </Popup>
-                </Marker>
-              ))}
-            </MapContainer>
-          </div>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
         </div>
-
-        {selectedCafe && (
-          <CafeDetailModal
-            cafe={selectedCafe}
-            onClose={() => setSelectedCafe(null)}
-            token={token}
-          />
-        )}
       </div>
+
+      {selectedCafe && (
+        <CafeDetailModal
+          cafe={selectedCafe}
+          onClose={() => setSelectedCafe(null)}
+          token={token}
+        />
+      )}
       <Footer />
-    </>
+    </div>
   );
 };
 
