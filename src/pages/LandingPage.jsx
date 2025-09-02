@@ -66,7 +66,7 @@ const LandingPage = () => {
               to={isLoggedIn ? "/home" : "/register"}
               className={`${styles.btnHero} ${styles.primary}`}
             >
-              <span>Raip memek</span>
+              <span>RAIP KONTOOOL</span>
             </Link>
           </div>
         </div>
