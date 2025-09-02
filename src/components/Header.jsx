@@ -53,7 +53,7 @@ const Header = () => {
       <div className={styles.logo}>
         <Link to={user ? "/home" : "/"}>
           <i className={`fas fa-mug-hot ${styles.logoIcon}`}></i>
-          JAWA JAWA JAWA ANJEENG
+          NgopiYuk!
         </Link>
       </div>
 
