@@ -41,5 +41,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /root/ngopiyuk-production
-            docker-compose pull frontend
-            docker-compose up -d --no-deps frontend
+            docker compose pull frontend
+            docker compose up -d --no-deps frontend
