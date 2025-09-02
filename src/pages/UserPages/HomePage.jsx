@@ -8,7 +8,6 @@ import myLocationIconUrl from "../../assets/LokasiSaya.png";
 import api, { API_URL } from "@/services/api";
 // Impor komponen pendukung
 import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import CafeDetailModal from "../../components/CafeDetailModal";
 import { Rating } from "react-simple-star-rating";
 import { getImageUrl } from "@/utils/imageUrl";
@@ -424,7 +423,6 @@ const UserHomePage = () => {
           token={token}
         />
       )}
-      <Footer />
     </div>
   );
 };
