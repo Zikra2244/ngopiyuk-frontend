@@ -74,7 +74,7 @@ function LocateControl() {
       markerRef.current.openPopup();
     }
   }, [position]);
-  s;
+
   return (
     <>
       <div className={styles.locateControlContainer}>
