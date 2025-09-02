@@ -114,7 +114,7 @@ const ProfilePage = () => {
           <div className={styles.profileHeaderCard}>
             <div className={styles.avatarContainer}>
               <img
-                src={`http://localhost:5000/${userData.avatar}`}
+                src={getImageUrl(userData.avatar, userData.id)}
                 alt="Foto Profil"
                 className={styles.profileAvatar}
                 onError={(e) => {

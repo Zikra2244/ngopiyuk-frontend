@@ -1,14 +1,28 @@
-export const API_URL = import.meta.env.VITE_PHOTO_URL;
+// Ambil base URL dari environment variables.
+// Ini akan disuntikkan oleh Vite saat proses build.
+const PHOTO_BASE_URL = import.meta.env.VITE_PHOTO_URL;
 
-// src/utils/photoUrl.js
 export function getImageUrl(photoPath, id) {
-  const photoBaseUrl = import.meta.env.VITE_PHOTO_URL || "";
-
-  if (photoPath) {
-    // contoh: http://localhost:5000/uploads/namafile.jpg
-    return `${photoBaseUrl}/${photoPath}`;
+  // Jika tidak ada photoPath, kembalikan avatar default
+  if (!photoPath) {
+    return `https://i.pravatar.cc/150?u=${id || "default"}`;
   }
 
-  // fallback avatar kalau tidak ada foto
-  return `https://i.pravatar.cc/40?u=${id}`;
+  // Jika photoPath sudah merupakan URL lengkap (misal: dari seeder),
+  // langsung kembalikan.
+  if (photoPath.startsWith("http")) {
+    return photoPath;
+  }
+
+  // Jika ini adalah path relatif (misal: "uploads/images/file.jpg"),
+  // gabungkan dengan base URL publik.
+  // Logika ini mencegah adanya garis miring ganda (//).
+  const cleanPath = photoPath.startsWith("/")
+    ? photoPath.substring(1)
+    : photoPath;
+  const baseUrl = PHOTO_BASE_URL.endsWith("/")
+    ? PHOTO_BASE_URL
+    : `${PHOTO_BASE_URL}/`;
+
+  return `${baseUrl}${cleanPath}`;
 }

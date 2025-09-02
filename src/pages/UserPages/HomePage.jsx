@@ -11,6 +11,18 @@ import Header from "../../components/Header";
 import CafeDetailModal from "../../components/CafeDetailModal";
 import { Rating } from "react-simple-star-rating";
 import { getImageUrl } from "@/utils/imageUrl";
+import { Icon } from "leaflet";
+import markerIconPng from "leaflet/dist/images/marker-icon.png";
+import markerShadowPng from "leaflet/dist/images/marker-shadow.png";
+// PENAMBAHAN BARU: Impor gambar retina dengan cara yang benar
+import markerIcon2xPng from "leaflet/dist/images/marker-icon-2x.png";
+
+Icon.Default.mergeOptions({
+  iconUrl: markerIconPng,
+  // PERUBAHAN: Gunakan variabel yang sudah di-import, bukan 'require'
+  iconRetinaUrl: markerIcon2xPng,
+  shadowUrl: markerShadowPng,
+});
 
 // Komponen helper untuk mengatur ulang ukuran peta saat sidebar/konten berubah
 function ResizeMap() {
@@ -22,14 +34,17 @@ function ResizeMap() {
   return null;
 }
 
+// File: ngopiyuk-frontend/src/pages/UserPages/Homepage.jsx
+
+// ... (semua kode di atas LocateControl biarkan apa adanya)
+
 function LocateControl() {
   const map = useMap();
   const [position, setPosition] = useState(null);
   const markerRef = useRef(null);
 
-  // Definisikan ikon kustom Anda di sini
   const myLocationIcon = L.divIcon({
-    className: "my-location-icon", // Class ini bisa dikosongkan jika tidak perlu style khusus
+    className: "my-location-icon",
     html: `<div class="${styles.pulsatingDot}"></div>`,
     iconSize: [20, 20],
     iconAnchor: [10, 10],
@@ -37,13 +52,23 @@ function LocateControl() {
   });
 
   const handleLocateClick = () => {
-    map.locate({ watch: true }).on("locationfound", function (e) {
-      setPosition(e.latlng); // Set posisi untuk me-render marker
-      map.flyTo(e.latlng, 16);
-    });
+    // PERUBAHAN #1: Hapus 'watch: true' untuk permintaan sekali klik
+    map
+      .locate()
+      .on("locationfound", function (e) {
+        setPosition(e.latlng);
+        map.flyTo(e.latlng, 16);
+      })
+      // PERUBAHAN #2 (PENTING): Tambahkan event listener untuk error
+      .on("locationerror", function (e) {
+        // Beri tahu pengguna bahwa terjadi masalah
+        alert(
+          "Gagal mendapatkan lokasi Anda. Pastikan Anda telah memberikan izin akses lokasi pada browser."
+        );
+        console.error("Location error:", e.message);
+      });
   };
 
-  // Efek untuk membuka popup setelah marker di-render
   useEffect(() => {
     if (markerRef.current) {
       markerRef.current.openPopup();
@@ -58,7 +83,6 @@ function LocateControl() {
         </button>
       </div>
       <div>
-        {/* Render Marker jika posisi sudah ditemukan */}
         {position && (
           <Marker position={position} icon={myLocationIcon} ref={markerRef}>
             <Popup>
@@ -70,7 +94,7 @@ function LocateControl() {
     </>
   );
 }
-// Komponen helper untuk memindahkan peta secara dinamis
+
 function MapFlyTo({ position }) {
   const map = useMap();
   useEffect(() => {
