@@ -40,6 +40,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/ngopiyuk-production
+            cd /root/ngopiyuk-production
             docker-compose pull frontend
             docker-compose up -d --no-deps frontend
