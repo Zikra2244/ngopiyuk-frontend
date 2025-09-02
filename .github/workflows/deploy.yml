@@ -41,11 +41,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /root/ngopiyuk-production
-            # Langkah 1: Unduh image terbaru
+
             docker compose pull frontend
-            # Langkah 2 (BARU): Hentikan container yang sedang berjalan
+
             docker compose stop frontend
-            # Langkah 3 (BARU): Hapus container lama dengan paksa
+
             docker compose rm -f frontend
-            # Langkah 4: Jalankan container baru dengan image baru
+
             docker compose up -d --no-deps frontend
