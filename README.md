@@ -8,7 +8,6 @@ Antarmuka pengguna (UI) untuk aplikasi **NgopiYuk!**, sebuah platform rekomendas
 - Navigasi SPA yang cepat menggunakan React Router.
 - Sistem ulasan dan rating bintang untuk setiap kafe.
 - Halaman profil pengguna yang personal dengan fitur update.
-- Login dengan Google.
 
 ## Teknologi Utama
 
