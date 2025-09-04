@@ -1,12 +1,27 @@
-# React + Vite
+# NgopiYuk! - Frontend Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Antarmuka pengguna (UI) untuk aplikasi **NgopiYuk!**, sebuah platform rekomendasi *coffee shop*. Dibangun sebagai *Single Page Application* (SPA) menggunakan React.js dan Vite.
 
-Currently, two official plugins are available:
+## Fitur Utama
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Peta interaktif untuk pencarian kafe berbasis lokasi.
+- Navigasi SPA yang cepat menggunakan React Router.
+- Sistem ulasan dan rating bintang untuk setiap kafe.
+- Halaman profil pengguna yang personal dengan fitur update.
+- Login dengan Google.
 
-## Expanding the ESLint configuration
+## Teknologi Utama
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-**Framework/Library**: React.js, React DOM
+- **Navigasi**: React Router DOM
+- **Komunikasi API**: Axios
+- **Komponen UI**: React Leaflet (Peta), React Simple Star Rating
+- **Alat Build**: Vite
+
+## Menjalankan Lokal
+
+1.  Pastikan server backend sudah berjalan.
+2.  Buat file `.env` dan isi `VITE_API_URL` & `VITE_PHOTO_URL` sesuai alamat backend.
+3.  Jalankan `npm install`.
+4.  Jalankan `npm run dev`.
+
